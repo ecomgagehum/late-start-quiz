@@ -27,6 +27,7 @@ body {
   font-family: var(--sans);
   font-size: 18px;
   line-height: 1.55;
+  overflow-wrap: anywhere; /* Tester v2: a long unbroken AI word can't push the page sideways on a phone */
 }
 
 .wrap {

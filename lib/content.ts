@@ -139,7 +139,7 @@ export const TYPES: Record<TypeId, { name: string; tag: string; tagline: string;
     tag: "Quiz - No-Places Guy",
     tagline: "Your week runs on the same few places and the same few people. You're not the problem. There's just no door for anyone new.",
     meaning:
-      "He would talk to people, but his week is a closed loop: work, home, maybe the gym, mostly the same faces. When school ended, the easy places dried up. The protection: a loop is safe and needs no risk. The cost: nobody new can walk in, so nothing changes. The fix: add one weekly place where he sees the same people again, and reach back to people he already knows.",
+      "He would talk to people, but his week is a closed loop: work, home, maybe the gym, mostly the same faces. If school ended, the easy places dried up (if he's still in school, don't say it ended). The protection: a loop is safe and needs no risk. The cost: nobody new can walk in, so nothing changes. The fix: add one weekly place where he sees the same people again, and reach back to people he already knows.",
   },
   burned_before: {
     name: "The Old Rule",

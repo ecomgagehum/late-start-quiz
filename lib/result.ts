@@ -43,13 +43,22 @@ const TYPE_IDS = Object.keys(TYPES) as TypeId[];
 // The only numbers the AI may cite (lib/content.ts RESEARCH). Any other percentage is dropped, sentence and all.
 const ALLOWED_PERCENTS = new Set(["44"]);
 
+// Tester v2: also catch "9 out of 10", "1 in 3", and "studies show" style claims with no approved source.
+const RATIO = /\b\d+\s+(?:out\s+of|in)\s+(?:\d+|ten|a\s+hundred)\b|\b(?:one|two|three|four|five|six|seven|eight|nine)\s+(?:out\s+of|in)\s+(?:ten|\d+)\b/i;
+const UNSOURCED = /\b(?:studies|research|science|surveys?|data|experts|psychologists)\s+(?:show|shows|says?|found|finds|proves?|suggests?)\b/i;
+const LINK = "\u0000link\u0000"; // marker: a sentence that held a link is dropped whole
+const APPROVED_SOURCE = /\b(?:Hinge|Huang|American Enterprise Institute)\b/i;
+
 function dropBadStats(s: string): string {
-  if (!/\d+(\.\d+)?\s*(%|percent)/i.test(s)) return s;
+  if (!/\d+(\.\d+)?\s*(%|percent)/i.test(s) && !RATIO.test(s) && !UNSOURCED.test(s) && !s.includes(LINK)) return s;
   const sentences = s.match(/[^.!?]+[.!?]*["”]?\s*/g) || [s];
   return sentences
     .filter((x) => {
       const nums = [...x.matchAll(/(\d+(?:\.\d+)?)\s*(?:%|percent)/gi)].map((m) => m[1]);
-      return nums.every((n) => ALLOWED_PERCENTS.has(n));
+      if (!nums.every((n) => ALLOWED_PERCENTS.has(n))) return false;
+      if (RATIO.test(x) || x.includes(LINK)) return false;
+      if (UNSOURCED.test(x) && !APPROVED_SOURCE.test(x)) return false;
+      return true;
     })
     .join("")
     .trim();
@@ -58,7 +67,14 @@ function dropBadStats(s: string): string {
 function str(v: unknown, max: number): string | null {
   if (typeof v !== "string") return null;
   // Plain text only: drop angle brackets and em/en dashes, collapse space, drop any stat we didn't approve.
-  let s = v.replace(/[<>]/g, "").replace(/\s*[—–]\s*/g, ", ").replace(/\s+/g, " ").trim();
+  // Tester v2: drop tags whole (not just the brackets) and any link the model was talked into writing.
+  let s = v
+    .replace(/<\/?[a-z][^>]*>/gi, "")
+    .replace(/[<>]/g, "")
+    .replace(/\bhttps?:\/\/\S+|\bwww\.\S+/gi, LINK)
+    .replace(/\s*[—–]\s*/g, ", ")
+    .replace(/\s+/g, " ")
+    .trim();
   s = dropBadStats(s);
   if (!s || s.toLowerCase() === "n/a") return null;
   return s.length > max ? s.slice(0, max - 1).trimEnd() + "…" : s;

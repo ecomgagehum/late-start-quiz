@@ -84,6 +84,9 @@ export async function writeResults(
       // Log only a short code. The SDK error can echo request details, so never log it whole.
       if (e instanceof Anthropic.APIConnectionTimeoutError) {
         console.error(`quiz_ai_error status=timeout attempt=${attempt + 1}`);
+        // Tester v2: a retry that runs out of time falls back to the tap-based result (bad_json path)
+        // instead of an error screen, since he already waited through one full try.
+        if (attempt > 0) break;
         throw new AiError("ai_timeout");
       }
       const status = e instanceof Anthropic.APIError ? e.status : undefined;

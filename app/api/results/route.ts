@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import { LIMITS, QUESTIONS, TAPS } from "@/lib/content";
 import { guard } from "@/lib/guard";
-import { crisisHit } from "@/lib/safety";
+import { crisisHit, under18Hit } from "@/lib/safety";
 import { AiError, writeResults } from "@/lib/ai";
 import { mockFor } from "@/lib/mock";
 import { QuizResult, fallbackResult, toQuizResult } from "@/lib/result";
@@ -108,6 +108,8 @@ export async function POST(req: NextRequest) {
 
   // Layer 1 safety: keyword check on the server. A hit skips the AI completely.
   if (crisisHit(answers.filter((a): a is string => !!a))) return ok({ kind: "crisis" });
+  // Under-18 backstop (Tester v2): a clear present-tense "I'm 16" / "I'm in 11th grade" skips the AI and the pitch.
+  if (under18Hit(answers.filter((a): a is string => !!a))) return ok({ kind: "under18" });
 
   if (process.env.QUIZ_MOCK === "1") {
     await new Promise((r) => setTimeout(r, 2500));

@@ -527,6 +527,8 @@ function resultsText(r: Extract<QuizResult, { kind: "result" }>, firstName: stri
     `What your first week could look like`,
     r.firstWeek,
     ``,
+    r.whyAPlan,
+    ``,
     `The 30-day plan: ${LINKS.salesPage}`,
   ].join("\n");
 }
@@ -604,8 +606,8 @@ function Results({
 
       <section className="section">
         <h3>What your first week could look like</h3>
-        <p>{r.firstWeek}</p>
-        <p>{r.whyAPlan}</p>
+        {r.firstWeek && <p>{r.firstWeek}</p>}
+        {r.whyAPlan && <p>{r.whyAPlan}</p>}
         <div className="offer">
           <p className="price">{OFFER.name}</p>
           <p><strong>{OFFER.price}, one payment.</strong> A 51-page workbook with one small rep a day for 30 days, plus a rep tracker, a rep card for each day, a pocket card for when your mind goes blank, and an AI Practice Partner to practice with first.</p>
