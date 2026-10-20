@@ -96,8 +96,8 @@ What do you tell yourself is the reason you're not where you want to be with wom
 *The thought that shows up when you're by yourself.*
 
 **Question 10**
-If you could try one small thing this week to talk to more people, what would you do? What would make it hard?
-*Small is good. Like saying hi to someone you see every week.*
+What's one small step you'd be willing to take this week to get more comfortable talking to women? What might stop you?
+*Small is good. Like saying hi to the barista you see every week, or asking a coworker how their weekend was.*
 
 Last button says: **Almost done**
 

@@ -116,8 +116,8 @@ export const QUESTIONS: { id: string; text: string; helper: string }[] = [
   },
   {
     id: "q10",
-    text: "If you could try one small thing this week to talk to more people, what would you do? What would make it hard?",
-    helper: "Small is good. Like saying hi to someone you see every week.",
+    text: "What's one small step you'd be willing to take this week to get more comfortable talking to women? What might stop you?",
+    helper: "Small is good. Like saying hi to the barista you see every week, or asking a coworker how their weekend was.",
   },
 ];
 
