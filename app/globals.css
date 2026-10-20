@@ -27,6 +27,7 @@ body {
   font-family: var(--sans);
   font-size: 18px;
   line-height: 1.55;
+  overflow-wrap: anywhere; /* Tester v2: a long unbroken AI word can't push the page sideways on a phone */
 }
 
 .wrap {
@@ -175,6 +176,7 @@ input:focus { border-color: var(--navy-2); }
 .typecard .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
 .typecard h2 { color: #fff; margin-bottom: 8px; }
 .typecard p { margin: 0; color: #e9ecf3; }
+.typecard .tagline { font-family: var(--serif); font-size: 19px; color: #fff; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.18); }
 .hb { list-style: none; padding: 0; margin: 0; }
 .hb li { border-left: 4px solid var(--maroon); background: var(--paper); border-radius: 0 10px 10px 0; padding: 12px 14px; margin-bottom: 10px; }
 .hb strong { display: block; color: var(--navy); margin-bottom: 2px; }
@@ -182,8 +184,19 @@ input:focus { border-color: var(--navy-2); }
 .steps li { counter-increment: s; position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 14px 58px; margin-bottom: 12px; }
 .steps li::before { content: counter(s); position: absolute; left: 14px; top: 14px; width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 16px; }
 .steps strong { display: block; color: var(--navy); font-size: 18px; margin-bottom: 4px; }
+.steps .when { font-size: 14px; color: var(--muted, #5b6170); margin: 0 0 6px; font-weight: 600; }
+.why p { font-family: var(--serif); font-size: 20px; color: var(--navy); background: var(--paper); border-radius: 12px; padding: 16px; margin: 0; }
 .steps .done { font-size: 14px; color: var(--green-dark); margin: 6px 0 0; font-weight: 600; }
 .quiet { font-family: var(--serif); font-size: 20px; color: var(--navy); border-left: 4px solid var(--line); padding-left: 14px; }
+/* belief cards: his belief (in his voice) vs. fixed research */
+.beliefs { list-style: none; padding: 0; margin: 0; }
+.beliefs li { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+.beliefs .belief { font-family: var(--serif); font-size: 19px; font-style: italic; color: var(--maroon); margin: 0 0 10px; }
+.beliefs .label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green-dark); margin: 0 0 4px; }
+.beliefs .research { margin: 0 0 6px; }
+.beliefs .source { font-size: 13px; color: var(--muted); margin: 0; }
+.beliefs .personal { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); font-weight: 600; color: var(--navy); }
+.beliefs-outro { font-family: var(--serif); font-size: 19px; color: var(--navy); margin: 4px 0 0; }
 .offer { background: var(--paper); border: 2px solid var(--gold); border-radius: var(--radius); padding: 20px 18px; margin-top: 14px; }
 .offer ul { padding-left: 20px; margin: 8px 0 16px; }
 .offer li { margin-bottom: 8px; }

@@ -1,4 +1,6 @@
-# The Late Start Quiz: Every Word He Sees (draft v1, Oct 19, 2026)
+# The Late Start Quiz: Every Word He Sees (draft v2, Oct 20, 2026)
+
+> v2 changes: tap 4 options reworded; new type names (hidden pattern, same Kajabi tags); longer loading copy; results page rebuilt (deeper read, his "why," steps in his places, "first week" bridge); new "took longer than usual" error.
 
 In order, screen by screen. The code uses these exact words (`components/Quiz.tsx` and `lib/content.ts`). Change them here, then the Builder copies the change into the code.
 
@@ -37,7 +39,9 @@ I've never been on a date. · I've talked to girls, but never asked one out. · 
 None · 1 or 2 · 3 to 5 · More than 5
 
 **4. What do you want most right now?**
-Stop freezing up · Meet more people · Feel more confident · Ask a girl out · Make more friends
+Stay calm when it's time to talk · Meet more people · Feel sure of myself · Ask a girl out · Make more friends
+
+(v2: no option repeats a type name word for word. Option ids are unchanged.)
 
 ---
 
@@ -96,15 +100,17 @@ Privacy box:
 
 ## 5. Loading
 
-Three pulsing dots. One line at a time, a new one every 3.5 seconds (stops on the last):
+Three pulsing dots. One line at a time, a new one every 5 seconds (stops on the last):
 
 1. Reading what you wrote...
-2. Picking out what matters most...
-3. Finding the steps that fit your week...
-4. Writing it in plain words...
-5. Almost there. Thanks for being honest.
+2. Looking for the thread that ties it together...
+3. Connecting where you've been to where you want to go...
+4. Picking 3 steps that fit your week...
+5. Mapping what your first week could look like...
+6. Writing it in plain words...
+7. Almost there. Thanks for being honest.
 
-Small: This takes about 10 to 25 seconds. Please keep this page open.
+Small: We're writing a full, personal read, so this takes about 20 to 45 seconds. Please keep this page open.
 
 (No percent, no fake progress bar.)
 
@@ -112,28 +118,57 @@ Small: This takes about 10 to 25 seconds. Please keep this page open.
 
 ## 6. Results page (template)
 
-**Hey [first name]. Here's what I heard.** (the page fills the name, not the AI)
-Small: Written by AI from your answers, using the methods in Gage's 30-day plan.
+**Hey [first name]. Here's what I see.** (the page fills the name, not the AI)
+Small: Written by AI from your answers, using the methods in Gage's 30-day plan. About a 5-minute read.
 
 If his answers were thin (AI flag `low_info`), a yellow note:
 > Your answers were pretty short, so this is a rough read. Retake with a little more detail and it gets a lot more personal.
 
-If the AI failed twice and we used the backup result:
+If the AI couldn't finish and we used the backup result:
 > We couldn't write your full results this time, so this one is based on your quick taps. You can retake the quiz any time for a fuller read.
 
-| Section | Heading on the page | How it's filled |
+The AI writes about 800 to 1,000 words in total. Full example: SAMPLE_RESULT_V2.md.
+
+| # | Heading on the page | How it's filled |
 |---|---|---|
-| Type card (navy) | YOUR TYPE / [The Freezer, The No-Places Guy, Burned Before, or Never Started] | Name is fixed by the page. One line why (AI, `type_reason`). |
-| 1 | Where you are | AI, 2 to 3 sentences, with 1 or 2 short exact quotes from his answers. |
-| 2 | Where you want to be | AI, 2 sentences, from questions 6 and 7. |
-| 3 | What's holding you back | AI, 2 or 3 items (short title + 1 to 2 sentences), each tied to a real workbook idea. |
-| 4 | Your 3 steps this week | AI picks 3 reps ONLY from the fixed list below and writes one "how" line fitted to his week. The page shows OUR rep title and "Done when:" line. Under the steps: "A step counts when you do it, not when it goes well." |
-| 5 | If nothing changes | AI, 2 to 3 calm sentences. No fear tactics. |
-| 6 | How the 30-day plan fits what you said | AI: one bridge line + 3 bullets ("You said ___. [real part of the plan] ___."). Then the fixed offer box below. |
+| Type card (navy) | YOUR PATTERN / [type name] / [fixed tagline] | Name and tagline fixed by the page (below). Then 1 to 2 sentences on how it shows up in HIS life (AI, `type_reason`). |
+| 1 | What's really going on | AI, 3 or 4 short paragraphs: where it started (his past), how it shows up now (the moment he described), what it protects him from and what it costs, why it's learnable. Uses his words as evidence (max 4 short quotes), then says what they mean. |
+| 2 | What's actually true | AI, 2 items (3 only if new). Kindly corrects the parts of the story he tells himself (question 9) that the belief cards don't cover, using his own life as evidence. No numbers, studies or sources. |
+| 3 | Why this matters to you | AI, one paragraph on his deepest reason (question 7). The emotional center. Shown larger, in a soft box. |
+| 4 | The honest cost of waiting | AI, one calm paragraph. Uses his own future picture. No fear tactics, no fake numbers. |
+| 5 | Your 3 steps this week | Small line: "Easiest first. Each one makes the next one easier." AI picks 3 reps ONLY from the fixed list below, and writes a short headline, "When:" (his day and place) and exactly what to say or do. The page adds OUR "Done when:" line. Under the steps: "A step counts when you do it, not when it goes well." |
+| 6 | What you've been telling yourself vs. what the research says | Only shows if the AI picked at least 1 card. Small line under the heading: "These facts are fixed. The AI didn't write them. Each one names the study it came from, with a link so you can check it yourself." Then 0 to 2 cards. Each card: his belief in quotes, "WHAT THE RESEARCH SAYS", the fixed finding, the fixed source line (small), then ONE line from the AI tying it to his words (10 to 20 words, max 25, no numbers; the page drops any sentence with a number or study). Closing line: "What you feel isn't always what's true. And confidence is something you can learn." |
+| 7 | What your first week could look like | AI, two paragraphs: what HIS first week in the plan looks like (Day 0, then Week 1 reps in his places), and why a plan fits him given what he already tried. Only real plan parts. Then the fixed offer box. |
+
+### The fixed belief cards (the ONLY stats on the page)
+
+The AI picks up to 2 by id and never writes a number. It never sees the numbers: it gets a plain summary of each card. "behind" and "no_means" share a number, so the page never shows both.
+
+| id | Belief (in his voice) | What the research says (fixed) | Source line (fixed) |
+|---|---|---|---|
+| behind | "I'm way behind everyone else." | Hinge's 2024 Gen Z report surveyed more than 15,000 daters. Over half (56%) said worrying about rejection has stopped them from going after someone, and 57% said they've held back from telling someone how they felt. **You're not the only one who's been stuck. Most guys your age feel this too.** | Source: Hinge, Gen Z D.A.T.E. Report, 2024 (a survey of Hinge users). Link: https://hinge.co/press/2024-GenZ-Report |
+| perfect_line | "I'll say something stupid. I need the right line." | A 2017 Harvard study (Huang and others, Journal of Personality and Social Psychology) found that people who asked more follow-up questions, meaning questions about what the other person just said, were liked more. In the speed-dating part of the study, people who asked more follow-up questions got more yeses for a second date. **You don't need a line. You need to be interested in her answer.** | Source: Huang, Yeomans, Brooks, Minson and Gino, "It Doesn't Hurt to Ask: Question-Asking Increases Liking," Journal of Personality and Social Psychology, 2017. Link: https://dash.harvard.edu/handle/1/42704282 |
+| looks | "I'm not good-looking enough." | Looks do matter some, for everyone. But a speed-dating study (Eastwick and Finkel, 2008) found that the traits people said they wanted ahead of time did a poor job of predicting who they actually liked once they met in person. And in a 2016 study (Farrelly and others), women rated kind, generous men as more attractive for a long-term relationship, and kindness gave the biggest boost to men who weren't the best-looking. **Looks open a door a little. How you treat people does a lot more once you're talking.** | Source: Eastwick and Finkel, Journal of Personality and Social Psychology, 2008; Farrelly, Clemson and Guthrie, "Are Women's Mate Preferences for Altruism Also Influenced by Physical Attractiveness?" Evolutionary Psychology, 2016. Link: https://eprints.worc.ac.uk/4109 |
+| bother | "She doesn't want me to talk to her." | In Bumble's own survey of women on its app, reported in August 2026, 66% said they'd rather the man send the first message. That's why Bumble dropped its rule that women had to message first. **Most women want the guy to start. Keep it respectful, easy to walk away from, and take a no well.** | Source: Bumble survey of women users, reported by TechCrunch, August 11, 2026 (a company survey). Link: https://techcrunch.com/2026/08/11/bumble-ditches-its-rule-that-kept-men-from-making-the-first-move/ |
+| not_natural | "I'm just not a natural. Some guys have it." | A 2015 study (Murphy and others, Personality and Social Psychology Bulletin) found that people who acted overconfident seemed more confident, which helped, but also seemed more arrogant, which hurt, and the two mostly canceled out. Acting cocky or "alpha" doesn't make you more attractive. **Calm beats cocky. Confidence is a skill you build with practice, not something you're born with.** | Source: Murphy, von Hippel, Dubbs and others, "The Role of Overconfidence in Romantic Desirability and Competition," Personality and Social Psychology Bulletin, 2015. Link: https://catalog.comses.net/publications/21445 |
+| no_places | "There's nowhere for me to meet anyone." | A 2023 national survey by the Survey Center on American Life found that half (50%) of young women who are in a relationship are dating someone they were friends with first. **A lot of couples start as friends in normal life. More people in your week means more chances.** | Source: Survey Center on American Life (American Enterprise Institute), "Friend Zone," February 2023. Link: https://www.americansurveycenter.org/short-reads/friend-zone/ |
+| nice_guy | "Nice guys finish last." | A famous study of 37 cultures around the world (Buss, 1989) found that "kind and understanding" ranked at or near the top of what women want in a partner, in every single culture. **Kind isn't the problem. Being passive is. Be kind and still make the first move.** | Source: Buss, "Sex Differences in Human Mate Preferences: Evolutionary Hypotheses Tested in 37 Cultures," Behavioral and Brain Sciences, 1989. Link: https://doi.org/10.1017/S0140525X00023992 |
+| no_means | "If she says no, it proves something's wrong with me." | Pew Research Center found that 43% of women under 50 who have used dating apps or sites had someone keep contacting them after they said they weren't interested (survey from 2022, published 2023). So many guys handle a no badly that handling it well really stands out. **A calm "No worries, have a good one" makes you the safe one. A no is about one moment, not about you.** | Source: Pew Research Center, "From Looking for Love to Swiping the Field: Online Dating in the U.S.," February 2023. Link: https://www.pewresearch.org/internet/2023/02/02/from-looking-for-love-to-swiping-the-field-online-dating-in-the-u-s/ |
+
+If the AI can't finish (backup result), the page shows 1 card by type with no AI line: not_natural (Over-Scripter, Someday Guy), no_places (Closed Loop), no_means (Old Rule).
+
+Fixed type names and taglines (Kajabi tags unchanged):
+
+| Internal id / Kajabi tag | Name on page | Tagline (fixed) |
+|---|---|---|
+| freezer / Quiz - Freezer | The Over-Scripter | Your brain writes the whole talk first, so nothing can go wrong. By the time the script is done, the moment is gone. |
+| no_places / Quiz - No-Places Guy | The Closed Loop | Your week runs on the same few places and the same few people. You're not the problem. There's just no door for anyone new. |
+| burned_before / Quiz - Burned Before | The Old Rule | One moment that stung wrote a rule: don't try, and it can't happen again. The moment is over. The rule is still running. |
+| never_started / Quiz - Never Started | The Someday Guy | You're waiting to feel ready first. But ready shows up after the first steps, not before them. |
 
 Fixed offer box (the AI never writes price, guarantee or link):
 > **The Late Start: The 30-Day Plan for Guys Who've Never Dated**
-> **$27, one payment.** A 51-page workbook with one small rep a day, plus the 30-Day Rep Tracker, 30 Rep Cards, the When You Freeze card and the AI Practice Partner.
+> **$27, one payment.** A 51-page workbook with one small rep a day for 30 days, plus a rep tracker, a rep card for each day, a pocket card for when your mind goes blank, and an AI Practice Partner to practice with first.
 > 90 days to decide. If it's not worth it, email the word "refund" to support@confidenceofayes.com and get your money back.
 > No plan can honestly promise you a date or a girlfriend. This one gives you a clear step for every day.
 > Button: **See the 30-day plan ($27)** → https://start.confidenceofayes.com/the-late-start
@@ -147,23 +182,25 @@ Bottom line: Not therapy. If you feel hopeless or think about hurting yourself, 
 
 ### The fixed rep list (the only steps the AI can give)
 
-| Rep | Done when |
-|---|---|
-| Warm up your social battery | You said hi to a few people on your walk. |
-| Hi + one question | You asked and listened. |
-| Notice something they chose | You said it out loud. |
-| Ask for a recommendation | You asked and said thanks. |
-| Eye contact + nod, five times | You hit five. |
-| The waiting-room chat | You said it, whatever they said back. |
-| Text one old friend | The message is sent. |
-| Go get a "no" | You asked. Bonus if you heard "no." Notice how fast the sting fades. |
-| Pick your one weekly thing | You picked it and signed up or showed up. |
-| Find the organizer | You said it and learned one name. |
-| Learn one name and use it | You learned a name and used it. |
-| Practice the Parrot | You used it once. |
-| Sort your week: green, yellow, red | You sorted every place you'll be this week. |
+The AI may only change where, when, who, and the simple words to say. Titles are plain English now (no "Parrot," no "green, yellow, red").
 
-All are from the workbook: Week 1 Days 1 to 7, Chapter 2 (weekly thing, old friend, organizer), Chapter 3 (green, yellow, red), Chapter 5 and the When You Freeze card (name, Parrot), and the morning social battery.
+| Rep (plain title) | Done when | From the workbook |
+|---|---|---|
+| Warm up on the way | You said hi to a few people on the way. | Week 1 morning social battery |
+| Eye contact and a nod, five times | You hit five. | Day 4 |
+| Say hi and ask one real question | You asked and listened. | Day 1 |
+| Say one thing about the moment you share | You said it, whatever they said back. | Day 5 + "say the obvious thing" |
+| Compliment something they chose | You said it out loud. | Day 2 |
+| Ask what they'd recommend | You asked and said thanks. | Day 3 |
+| Go get a small no on purpose | You asked. Bonus if you heard "no." Notice how fast the sting fades. | Day 7 |
+| Say hi to someone you see every week (NEW) | You said hi and one thing, then let it end well. | Day 15 + gym row of the Places Map + leave-well rule |
+| Learn one name and use it | You learned a name and used it. | Week 2 |
+| Bring back something they told you (NEW) | You made one callback. | Day 12 |
+| Repeat their last words as a question | You used it once in a real chat. | When You Freeze card. Only for guys who can start chats but run dry. |
+| Text one old friend | The message is sent. | Build Your Circle |
+| Pick one thing you go to every week | You picked it and signed up or showed up. | Build Your Circle |
+| Talk to the person running the group | You said it and learned one name. | Build Your Circle |
+| Sort your week by where talking is normal | You sorted every place you'll be this week. | Respect First |
 
 ---
 
@@ -228,6 +265,7 @@ Each has the buttons **Try again** (when it can help) and **Back to my answers**
 | When | Heading | Text | Try again? |
 |---|---|---|---|
 | Too many tries this hour | Let's take a short break | A lot of quizzes came from your internet connection this hour. Please try again in an hour. | No |
+| AI took too long (v2) | That took longer than usual | Writing your results ran out of time on our end. It's not you. Your answers are still here. Tap Try again. | Yes |
 | AI or daily cap busy | We're very busy right now | Too many people are taking the quiz at once. Your answers are still here. Please try again in a few minutes. | Yes |
 | No internet | Looks like you lost connection | Your answers are still here on this screen. Check your signal, then tap Try again. | Yes |
 | Answer too long | That's a lot of words | One of your answers is too long for us to read. Tap Back to my answers and trim it a little. | No |
@@ -250,7 +288,7 @@ Privacy Policy (https://start.confidenceofayes.com/privacy-policy) · Terms (/te
 
 For [first name]
 My quiz results (The Confidence of a Yes)
-Your type, Where you are, Where you want to be, What's holding you back, Your 3 steps this week (with Done when), If nothing changes, and the 30-day plan link.
+Your pattern (name, tagline, why), What's really going on, What's actually true, Why this matters to you, The honest cost of waiting, Your 3 steps this week (with When and Done when), the belief cards (belief, research, source, his line), What your first week could look like, and the 30-day plan link.
 
 ---
 

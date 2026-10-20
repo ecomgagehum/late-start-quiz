@@ -9,17 +9,18 @@ const BASE = process.argv[2] || "http://localhost:3100";
 const OUT = path.join(__dirname, "..", "screens");
 const EXE = process.env.CHROME_PATH || "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
 
+// Same as MARCUS_ANSWERS in lib/mock.ts (Gage's test persona, made up).
 const SAMPLE = [
-  "I work at a warehouse, early shifts. After work I lift and play some video games. Sundays I go to church with my mom.",
-  "Work, gym four nights, church Sunday. I talk to the guys on my shift and that's about it.",
-  "There was a girl at the gym by the water fountain. I ran the whole thing in my head and then she left.",
-  "Not really. In high school a girl laughed when my friend told her I liked her.",
-  "Kind of stuck. Everyone else seems to have figured it out.",
-  "Friends on the weekend, someone to take to dinner, feeling normal about it.",
-  "I don't want to be the guy who always waited.",
-  "Watched a bunch of videos. Tried an app for a week. Nothing really.",
-  "It's too late, everyone figured this out in high school.",
-  "Say hi to someone at church. The hard part is my mind going blank.",
+  "I've been lifting for about 3 years. I play video games online with my buddies most nights. I just got promoted to team lead at the warehouse. I'm good with cars, my dad taught me. Church on Sundays is a big deal for me.",
+  "I work 6 to 3. Gym at 5:30 four nights a week. I talk to my coworkers. Sunday is church and then lunch with my parents. Weekends I play games or work on my truck. I don't really meet new people.",
+  "There's a girl by the water fountain at my gym every Tuesday. I scripted the whole conversation in my head and then she walked away. My mind goes blank or I overthink it until the moment is gone.",
+  "In 10th grade I asked a girl to a dance in front of people. She laughed and said \"oh my gosh, no.\" I kind of stopped trying after that.",
+  "Frustrated and embarrassed. I'm 24 and I've never been on a real date. Most of my friends are in relationships and that stings. I feel behind.",
+  "I could walk up to a girl without my heart pounding. I'd go on some dates, maybe have someone I'm seeing. More friends on the weekends, not just online. I'd feel like myself.",
+  "Yes. I want to get married and have a family someday. I don't want to be 30 and still the guy who never made a move. I want to stop feeling like something's wrong with me.",
+  "I tried a dating app. Got 2 matches, didn't know what to say, deleted it. Watched some confidence videos on YouTube but they felt like sleazy pickup stuff. My buddy said \"just go talk to her bro.\"",
+  "I'm not good enough. Not interesting enough or good-looking enough. I'll say something stupid. I'm not a natural.",
+  "say hi to the girl by the water fountain. or talk to the barista at the coffee place by work, I go there almost every morning.",
 ];
 
 async function run() {
@@ -43,16 +44,12 @@ async function run() {
   await shot("02-tap-age");
   await page.getByRole("button", { name: "22 to 25" }).click();
   await shot("03-tap-dating");
-  await page.getByRole("button", { name: "I've never been on a date." }).click();
+  await page.getByRole("button", { name: "I've talked to girls, but never asked one out." }).click();
   await page.getByRole("button", { name: "1 or 2" }).click();
   await shot("04-tap-want");
-  await page.getByRole("button", { name: "Stop freezing up" }).click();
+  await page.getByRole("button", { name: "Stay calm when it's time to talk" }).click();
   for (let i = 0; i < 10; i++) {
-    if (i === 3) {
-      if (i === 3) await shot("06-question-4-empty-skip");
-      await page.getByRole("button", { name: "Skip this one" }).click();
-      continue;
-    }
+    if (i === 3) await shot("06-question-4-empty-skip");
     await page.locator("textarea").fill(SAMPLE[i]);
     if (i === 0) await shot("05-question-1-voice-tip");
     if (i === 2) await shot("07-question-3-filled");
@@ -70,9 +67,23 @@ async function run() {
   await page.getByRole("button", { name: "Show my results" }).click();
   await page.waitForSelector(".loadline");
   await shot("10-loading");
-  await page.waitForSelector(".typecard", { timeout: 30000 });
+  await page.waitForSelector(".typecard", { timeout: 60000 });
   await shot("11-results-top");
   await shot("12-results-full", true);
+  // The belief cards section (his beliefs vs. fixed research), as one phone-width shot of just that section.
+  const beliefs = page.locator("section", { has: page.locator("ul.beliefs") });
+  await beliefs.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(250);
+  await beliefs.screenshot({ path: path.join(OUT, "belief-cards.png") });
+  console.log("saved belief-cards | cards:", await page.locator("ul.beliefs > li").count());
+  const m = await page.evaluate(() => {
+    const art = document.querySelector("article");
+    const words = (art.innerText.match(/\S+/g) || []).length;
+    const h = document.documentElement.scrollHeight;
+    const top = (sel) => { const el = [...document.querySelectorAll("h3")].find((x) => x.textContent.startsWith(sel)); return el ? Math.round(el.getBoundingClientRect().top + scrollY) : -1; };
+    return { words, height: h, screens: +(h / innerHeight).toFixed(1), steps: top("Your 3 steps"), beliefs: top("What you"), offer: Math.round(document.querySelector(".offer").getBoundingClientRect().top + scrollY), vh: innerHeight, sideScroll: document.documentElement.scrollWidth > innerWidth };
+  });
+  console.log("results page:", JSON.stringify(m));
 
   // Retake in the same visit: the request must say alreadySaved (no second signup)
   let lastBody = null;
@@ -80,24 +91,24 @@ async function run() {
   await page.getByRole("button", { name: "Retake the quiz" }).click();
   await page.getByRole("button", { name: "Start" }).click();
   await page.getByRole("button", { name: "22 to 25" }).click();
-  await page.getByRole("button", { name: "I've never been on a date." }).click();
+  await page.getByRole("button", { name: "I've talked to girls, but never asked one out." }).click();
   await page.getByRole("button", { name: "1 or 2" }).click();
-  await page.getByRole("button", { name: "Stop freezing up" }).click();
+  await page.getByRole("button", { name: "Stay calm when it's time to talk" }).click();
   for (let i = 0; i < 10; i++) {
     await page.locator("textarea").fill(SAMPLE[i]);
     await page.getByRole("button", { name: i < 9 ? "Next" : "Almost done" }).click();
   }
   await page.getByRole("button", { name: "Show my results" }).click();
-  await page.waitForSelector(".typecard", { timeout: 30000 });
+  await page.waitForSelector(".typecard", { timeout: 60000 });
   console.log("retake sends alreadySaved:", lastBody && lastBody.alreadySaved === true, "| has email:", !!(lastBody && lastBody.email), "| honeypot field:", lastBody && "hp_7c" in lastBody);
 
   // Phone back button: browser back on question 3 goes to question 2 and keeps the answer
   await page.goto(BASE);
   await page.getByRole("button", { name: "Start" }).click();
   await page.getByRole("button", { name: "22 to 25" }).click();
-  await page.getByRole("button", { name: "I've never been on a date." }).click();
+  await page.getByRole("button", { name: "I've talked to girls, but never asked one out." }).click();
   await page.getByRole("button", { name: "1 or 2" }).click();
-  await page.getByRole("button", { name: "Stop freezing up" }).click();
+  await page.getByRole("button", { name: "Stay calm when it's time to talk" }).click();
   await page.locator("textarea").fill("answer one");
   await page.getByRole("button", { name: "Next" }).click();
   await page.locator("textarea").fill("answer two");

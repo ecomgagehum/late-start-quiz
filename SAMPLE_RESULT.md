@@ -1,5 +1,7 @@
 # SAMPLE RESULT (made up, for review only)
 
+> **Out of date (v1).** The v2 prompt and result shape replaced this on Oct 20, 2026. See SAMPLE_RESULT_V2.md.
+
 **This is a sample.** "Marcus" is not a real person. His answers below were written by the Builder to test the quiz. The result was written **by hand, following the system prompt in `lib/prompt.ts` exactly**, because no Anthropic key is available in this build session, so the real AI has not been called yet. Once the key is in Vercel, the Tester should run 10 real answer sets (Haiku vs Sonnet) and compare to this.
 
 It's also the exact result the app shows in test mode (`QUIZ_MOCK=1`, from `lib/mock.ts`). About 430 words of AI-written text (the plan asks for 350 to 500 in the AI fields; the full page with fixed parts is about 600).

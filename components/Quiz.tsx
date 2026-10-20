@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LIMITS, LINKS, OFFER, QUESTIONS, TAPS, VOICE_TIP } from "@/lib/content";
+import { BELIEF_SECTION, LIMITS, LINKS, OFFER, QUESTIONS, TAPS, VOICE_TIP } from "@/lib/content";
 import type { QuizResult } from "@/lib/result";
 
 // Answers live only in this component's memory. Nothing is written to localStorage, cookies or the URL.
@@ -20,8 +20,10 @@ const EMAIL_RE = /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[a-z]{2,}$/i;
 
 const LOADING_LINES = [
   "Reading what you wrote...",
-  "Picking out what matters most...",
-  "Finding the steps that fit your week...",
+  "Looking for the thread that ties it together...",
+  "Connecting where you've been to where you want to go...",
+  "Picking 3 steps that fit your week...",
+  "Mapping what your first week could look like...",
   "Writing it in plain words...",
   "Almost there. Thanks for being honest.",
 ];
@@ -51,6 +53,11 @@ const ERRORS: Record<string, { title: string; body: string; retry: boolean; back
     title: "Let's take a short break",
     body: "A lot of quizzes came from your internet connection this hour. Please try again in an hour.",
     retry: false,
+  },
+  slow: {
+    title: "That took longer than usual",
+    body: "Writing your results ran out of time on our end. It's not you. Your answers are still here. Tap Try again.",
+    retry: true,
   },
   busy: {
     title: "We're very busy right now",
@@ -432,14 +439,14 @@ function TopBar({ onBack, step }: { onBack: () => void; step: number }) {
 function Loading({ headingRef }: { headingRef: React.RefObject<HTMLHeadingElement | null> }) {
   const [n, setN] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setN((x) => Math.min(x + 1, LOADING_LINES.length - 1)), 3500);
+    const t = setInterval(() => setN((x) => Math.min(x + 1, LOADING_LINES.length - 1)), 5000);
     return () => clearInterval(t);
   }, []);
   return (
     <div className="loading" aria-live="polite">
       <div className="dots" aria-hidden="true"><span /><span /><span /></div>
       <h2 ref={headingRef} tabIndex={-1} className="loadline">{LOADING_LINES[n]}</h2>
-      <p className="small muted">This takes about 10 to 25 seconds. Please keep this page open.</p>
+      <p className="small muted">We&apos;re writing a full, personal read, so this takes about 20 to 45 seconds. Please keep this page open.</p>
     </div>
   );
 }
@@ -496,28 +503,47 @@ function Harm({ headingRef, onRetake }: { headingRef: React.RefObject<HTMLHeadin
 
 function resultsText(r: Extract<QuizResult, { kind: "result" }>, firstName: string): string {
   return [
+    ...(firstName ? [`For ${firstName}`] : []),
     `My quiz results (The Confidence of a Yes)`,
     ``,
-    `Your type: ${r.typeName}`,
+    `Your pattern: ${r.typeName}`,
+    r.typeTagline,
     r.typeReason,
     ``,
-    `Where you are`,
-    r.whereYouAre,
+    `What's really going on`,
+    ...r.whatsGoingOn.flatMap((p) => [p, ``]),
+    `What's actually true`,
+    ...r.whatsTrue.map((h) => `- ${h.title}: ${h.text}`),
     ``,
-    `Where you want to be`,
-    r.whereYouWant,
+    `Why this matters to you`,
+    r.yourWhy,
     ``,
-    `What's holding you back`,
-    ...r.holdingBack.map((h) => `- ${h.title}: ${h.text}`),
+    `The honest cost of waiting`,
+    r.costOfWaiting,
     ``,
     `Your 3 steps this week`,
-    ...r.steps.map((s, i) => `${i + 1}. ${s.title}. ${s.how} Done when: ${s.doneWhen}`),
+    ...r.steps.map((s, i) => `${i + 1}. ${s.headline}.${s.whenWhere ? ` When: ${s.whenWhere}.` : ""} ${s.whatToDo} Done when: ${s.doneWhen}`),
     ``,
-    `If nothing changes`,
-    r.ifNothingChanges,
+    ...(r.beliefs.length
+      ? [
+          BELIEF_SECTION.title,
+          ...r.beliefs.flatMap((b) => [
+            `"${b.belief}"`,
+            `What the research says: ${b.research} ${b.takeaway} (Source: ${b.source}, ${b.url})`,
+            ...(b.personalLine ? [b.personalLine] : []),
+            ``,
+          ]),
+          BELIEF_SECTION.outro,
+          ``,
+        ]
+      : []),
+    `What your first week could look like`,
+    r.firstWeek,
+    ``,
+    r.whyAPlan,
     ``,
     `The 30-day plan: ${LINKS.salesPage}`,
-  ].join("\n").replace(/^/, firstName ? `For ${firstName}\n` : "");
+  ].join("\n");
 }
 
 function Results({
@@ -539,43 +565,51 @@ function Results({
   };
   return (
     <article>
-      <h1 ref={headingRef} tabIndex={-1}>Hey {firstName || "there"}. Here&apos;s what I heard.</h1>
-      <p className="byline">Written by AI from your answers, using the methods in Gage&apos;s 30-day plan.</p>
+      <h1 ref={headingRef} tabIndex={-1}>Hey {firstName || "there"}. Here&apos;s what I see.</h1>
+      <p className="byline">Written by AI from your answers, using the methods in Gage&apos;s 30-day plan. About a 5-minute read.</p>
       {r.fallback && <p className="note">We couldn&apos;t write your full results this time, so this one is based on your quick taps. You can retake the quiz any time for a fuller read.</p>}
       {r.lowInfo && !r.fallback && <p className="note">Your answers were pretty short, so this is a rough read. Retake with a little more detail and it gets a lot more personal.</p>}
 
       <div className="typecard">
-        <div className="eyebrow">Your type</div>
+        <div className="eyebrow">Your pattern</div>
         <h2>{r.typeName}</h2>
+        <p className="tagline">{r.typeTagline}</p>
         <p>{r.typeReason}</p>
       </div>
 
       <section className="section">
-        <h3>Where you are</h3>
-        <p>{r.whereYouAre}</p>
+        <h3>What&apos;s really going on</h3>
+        {r.whatsGoingOn.map((p, i) => <p key={i}>{p}</p>)}
       </section>
 
       <section className="section">
-        <h3>Where you want to be</h3>
-        <p>{r.whereYouWant}</p>
-      </section>
-
-      <section className="section">
-        <h3>What&apos;s holding you back</h3>
+        <h3>What&apos;s actually true</h3>
         <ul className="hb">
-          {r.holdingBack.map((h, i) => (
+          {r.whatsTrue.map((h, i) => (
             <li key={i}><strong>{h.title}</strong>{h.text}</li>
           ))}
         </ul>
       </section>
 
+      <section className="section why">
+        <h3>Why this matters to you</h3>
+        <p>{r.yourWhy}</p>
+      </section>
+
+      <section className="section">
+        <h3>The honest cost of waiting</h3>
+        <p className="quiet">{r.costOfWaiting}</p>
+      </section>
+
       <section className="section">
         <h3>Your 3 steps this week</h3>
+        <p className="small muted" style={{ marginTop: -4 }}>Easiest first. Each one makes the next one easier.</p>
         <ol className="steps">
           {r.steps.map((s) => (
             <li key={s.repId}>
-              <strong>{s.title}</strong>
-              {s.how}
+              <strong>{s.headline}</strong>
+              {s.whenWhere && <p className="when">When: {s.whenWhere}</p>}
+              {s.whatToDo}
               <p className="done">Done when: {s.doneWhen}</p>
             </li>
           ))}
@@ -583,20 +617,36 @@ function Results({
         <p className="small muted">A step counts when you do it, not when it goes well.</p>
       </section>
 
-      <section className="section">
-        <h3>If nothing changes</h3>
-        <p className="quiet">{r.ifNothingChanges}</p>
-      </section>
+      {r.beliefs.length > 0 && (
+        <section className="section">
+          <h3>{BELIEF_SECTION.title}</h3>
+          <p className="small muted" style={{ marginTop: -4 }}>{BELIEF_SECTION.intro}</p>
+          <ul className="beliefs">
+            {r.beliefs.map((b) => (
+              <li key={b.id}>
+                <p className="belief">&ldquo;{b.belief}&rdquo;</p>
+                <p className="label">What the research says</p>
+                <p className="research">{b.research}</p>
+                <p className="research"><strong>{b.takeaway}</strong></p>
+                <p className="source">
+                  Source: {b.source}.{" "}
+                  <a href={b.url} target="_blank" rel="noopener noreferrer">See the study</a>
+                </p>
+                {b.personalLine && <p className="personal">{b.personalLine}</p>}
+              </li>
+            ))}
+          </ul>
+          <p className="beliefs-outro">{BELIEF_SECTION.outro}</p>
+        </section>
+      )}
 
       <section className="section">
-        <h3>How the 30-day plan fits what you said</h3>
-        <p>{r.bridgeIntro}</p>
+        <h3>What your first week could look like</h3>
+        {r.firstWeek && <p>{r.firstWeek}</p>}
+        {r.whyAPlan && <p>{r.whyAPlan}</p>}
         <div className="offer">
-          <ul>
-            {r.planFit.map((p, i) => <li key={i}>{p}</li>)}
-          </ul>
           <p className="price">{OFFER.name}</p>
-          <p><strong>{OFFER.price}, one payment.</strong> A 51-page workbook with one small rep a day, plus the 30-Day Rep Tracker, 30 Rep Cards, the When You Freeze card and the AI Practice Partner.</p>
+          <p><strong>{OFFER.price}, one payment.</strong> A 51-page workbook with one small rep a day for 30 days, plus a rep tracker, a rep card for each day, a pocket card for when your mind goes blank, and an AI Practice Partner to practice with first.</p>
           <p className="small">90 days to decide. If it&apos;s not worth it, email the word &quot;refund&quot; to {LINKS.support} and get your money back.</p>
           <p className="small muted">No plan can honestly promise you a date or a girlfriend. This one gives you a clear step for every day.</p>
           <a className="btn gold" href={LINKS.salesPage}>See the 30-day plan ({OFFER.price})</a>

@@ -44,7 +44,7 @@ If the email save fails, he still sees his results. Only a short code goes in th
 
 ## Other settings (optional)
 
-- `QUIZ_MODEL`: which Claude model writes results. Default `claude-haiku-5-5`.
+- `QUIZ_MODEL`: which Claude model writes results. Default `claude-sonnet-5-5` (v2: the longer, deeper result needs it; about 20 to 45 seconds). Set `claude-haiku-5-5` to save cost, but results get shallower.
 - `RATE_LIMIT_PER_HOUR` (default 12 per person) and `DAILY_LIMIT` (default 300 for everyone). These counts reset when Vercel restarts, so they're a speed bump, not a wall. The Anthropic spend limit is the wall.
 - `ALLOWED_ORIGINS`: leave empty. The quiz's own address always works.
 

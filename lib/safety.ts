@@ -15,7 +15,7 @@ const CRISIS_PATTERNS: RegExp[] = [
   /\bwish\s+i\s*(was|were|had|'?d)\s+never\s+(been\s+)?born\b/i,
   /\bbetter\s+off\s+(dead|without\s+me)\b/i,
   /\b(not|isn'?t|aint|ain'?t)\s+worth\s+living\b/i,
-  /\bno\s+(reason|point)\s+(to|in)\s+(live|living|being alive|going on)\b/i,
+  /\bno\s+(reason|point)\s+((to|in)\s+)?(live|living|being alive|going on)\b/i, // Tester v2: "no point living like this"
   /\bwhat'?s\s+the\s+point\s+(of|in)\s+(living|life|being alive)\b/i,
   /\bdon'?t\s+want\s+to\s+(live|be\s+alive|be\s+here\s+anymore|exist|wake\s+up)\b/i,
   /\bself[\s-]?harm(ing)?\b/i,
@@ -31,6 +31,24 @@ const CRISIS_PATTERNS: RegExp[] = [
 // Common idioms that are not a crisis. Removed before the check so they can't trip it.
 // "killing myself at the gym", "hurt myself lifting", "cut myself shaving" are no longer patterns at all.
 const NOT_CRISIS = /\b(social|career|commercial|political|dating)\s+suicide\b/gi;
+
+// Server-side under-18 backstop (Tester v2). Present tense only ("I'm 16", "I'm in 11th grade",
+// "I'm a junior in high school"), so a memory like "In 10th grade a girl laughed at me" or "when I was 16"
+// never trips it. The age number must be followed by the end of a phrase, so "I'm 16 months into lifting"
+// doesn't trip it either. The AI's under18 flag stays as the second layer for anything this misses.
+const I_AM = String.raw`\b(?:i'?m|i\s+am|im)\s+(?:only\s+|just\s+|still\s+|currently\s+)?`;
+const UNDER18_PATTERNS: RegExp[] = [
+  new RegExp(I_AM + String.raw`(1[0-7])(?:\s*(?:years?|yrs?)\s*old|\s*y\/?o)?(?=\s*(?:$|[.,!?;)]|and\b|but\b|so\b|lol\b|rn\b|right now\b|turning\b))`, "i"),
+  new RegExp(I_AM + String.raw`(?:in\s+)?(?:the\s+)?(?:7th|8th|9th|10th|11th|12th|seventh|eighth|ninth|tenth|eleventh|twelfth)\s+grade\b`, "i"),
+  new RegExp(I_AM + String.raw`(?:in\s+)?(?:high\s*school|middle\s*school|junior\s*high)\b`, "i"),
+  new RegExp(I_AM + String.raw`(?:a\s+)?(?:high\s*school|hs)\s+(?:freshman|sophomore|junior|senior|student|kid)\b`, "i"),
+  new RegExp(I_AM + String.raw`(?:a\s+)?(?:freshman|sophomore|junior|senior)\s+(?:in|at)\s+(?:high\s*school|hs)\b`, "i"),
+  /\bmy\s+(?:mom|mum|dad|parents?)\s+(?:won'?t|don'?t|doesn'?t|wont|dont|doesnt)\s+let\s+me\s+date\b/i,
+];
+
+export function under18Hit(texts: string[]): boolean {
+  return texts.some((t) => UNDER18_PATTERNS.some((re) => re.test(t)));
+}
 
 export function crisisHit(texts: string[]): boolean {
   return texts.some((t) => {
