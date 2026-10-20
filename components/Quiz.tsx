@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LIMITS, LINKS, OFFER, QUESTIONS, TAPS, VOICE_TIP } from "@/lib/content";
+import { BELIEF_SECTION, LIMITS, LINKS, OFFER, QUESTIONS, TAPS, VOICE_TIP } from "@/lib/content";
 import type { QuizResult } from "@/lib/result";
 
 // Answers live only in this component's memory. Nothing is written to localStorage, cookies or the URL.
@@ -524,6 +524,19 @@ function resultsText(r: Extract<QuizResult, { kind: "result" }>, firstName: stri
     `Your 3 steps this week`,
     ...r.steps.map((s, i) => `${i + 1}. ${s.headline}.${s.whenWhere ? ` When: ${s.whenWhere}.` : ""} ${s.whatToDo} Done when: ${s.doneWhen}`),
     ``,
+    ...(r.beliefs.length
+      ? [
+          BELIEF_SECTION.title,
+          ...r.beliefs.flatMap((b) => [
+            `"${b.belief}"`,
+            `What the research says: ${b.research} (Source: ${b.source})`,
+            ...(b.personalLine ? [b.personalLine] : []),
+            ``,
+          ]),
+          BELIEF_SECTION.outro,
+          ``,
+        ]
+      : []),
     `What your first week could look like`,
     r.firstWeek,
     ``,
@@ -603,6 +616,25 @@ function Results({
         </ol>
         <p className="small muted">A step counts when you do it, not when it goes well.</p>
       </section>
+
+      {r.beliefs.length > 0 && (
+        <section className="section">
+          <h3>{BELIEF_SECTION.title}</h3>
+          <p className="small muted" style={{ marginTop: -4 }}>{BELIEF_SECTION.intro}</p>
+          <ul className="beliefs">
+            {r.beliefs.map((b) => (
+              <li key={b.id}>
+                <p className="belief">&ldquo;{b.belief}&rdquo;</p>
+                <p className="label">What the research says</p>
+                <p className="research">{b.research}</p>
+                <p className="source">{b.source}</p>
+                {b.personalLine && <p className="personal">{b.personalLine}</p>}
+              </li>
+            ))}
+          </ul>
+          <p className="beliefs-outro">{BELIEF_SECTION.outro}</p>
+        </section>
+      )}
 
       <section className="section">
         <h3>What your first week could look like</h3>

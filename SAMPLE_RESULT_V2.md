@@ -2,7 +2,9 @@
 
 **This is a sample.** "Marcus" is the made-up test guy Gage wrote. The result below was written **by hand by the Builder, following the v2 system prompt in `lib/prompt.ts`**, as the quality bar the AI should hit. No live AI call was made in this build session (no API key here). It is also exactly what the app shows in test mode (`QUIZ_MOCK=1`, from `lib/mock.ts`).
 
-About 1000 words of AI-written text (the prompt asks for about 800 to 1,000). The fixed parts (type line, done-when lines, offer box) are added by the page, not the AI.
+About 990 words of AI-written text (the prompt asks for about 800 to 1,000). The fixed parts (type line, belief card facts and sources, done-when lines, offer box) are added by the page, not the AI.
+
+**Belief cards update (Oct 20, 2026):** a new section near the end, "What you've been telling yourself vs. what the research says." The AI picks up to 2 fixed cards that match his answers and writes one short line for each (no numbers). Marcus gets `perfect_line` (he scripts and says "I'll say something stupid") and `looks` ("not good-looking enough"). Stats now live ONLY in these cards: the old Huang sentence in "What's actually true" is gone, and that item ("You don't need a script") was cut because the `perfect_line` card covers it. On the phone page (390px wide): 1,450 words total, up from about 1,285 (the cards add about 175 fixed words, the AI text is about 15 words shorter).
 
 ## What changed from v1, in one line each
 
@@ -75,7 +77,6 @@ Now look at the rest of your life. You've lifted for three years. Your dad taugh
 
 ### What's actually true
 
-- **You don't need a script.** The talk you write in your head doesn't need to exist. A first sentence can be plain, like "Hey, how's your workout going?" One study (Huang and others, 2017) found that people who ask more follow-up questions are liked more. A simple question and real listening beat a perfect line.
 - **Nobody is a natural.** You said you're "not a natural." Neither is anyone. The guys who look natural just took more reps, earlier. A little nervous but kind beats smooth. Your nerves aren't what lose the moment. The waiting is.
 - **That laugh was one moment.** One girl, one dance, one bad answer, back in 10th grade. It was never a verdict on who you are at 24. A no is one person's answer to one question, on one day. You can relearn that in small doses.
 
@@ -108,6 +109,24 @@ This is the one you named yourself. Don't plan a speech. If she's resting and ha
 
 *A step counts when you do it, not when it goes well.*
 
+### What you've been telling yourself vs. what the research says
+
+*These facts are fixed. The AI didn't write them, and each one names where it came from.* (fixed)
+
+> *"I'll say something stupid. I need the right line."*  
+> **WHAT THE RESEARCH SAYS** (fixed)  
+> In studies of real conversations and speed dates, people who asked more follow-up questions (questions about what the other person just said) were liked more. Speed daters who did it got more yeses for a second date. No line needed, just interest.  
+> <small>Huang and others, Harvard, 2017</small>  
+> **You don't need the script you write at the water fountain. Ask about her workout, then really listen to what she says.** (AI line)
+
+> *"I'm not good-looking enough."*  
+> **WHAT THE RESEARCH SAYS** (fixed)  
+> Looks do matter some, for everyone. But in speed-dating research, the "must-haves" people listed ahead of time did a poor job of guessing who they actually liked once they met in person. In other studies, women rated kind men as more attractive partners for the long run, and kindness helped most for men who weren't the best-looking.  
+> <small>Eastwick and Finkel, 2008; Farrelly and others, 2016</small>  
+> **You put looks on your list. Your crew made you team lead. Being kind and steady counts here too, maybe more than you think.** (AI line)
+
+*What you feel isn't always what's true. And confidence is something you can learn.* (fixed)
+
 ### What your first week could look like
 
 Here's what your first week in the 30-day plan would look like. Day 0 is about an hour of short reads. You'd learn where talking to someone is normal and when to leave her alone, so the gym stops feeling like a guessing game. Day 1 is one small rep: ask the barista by work one real question. By Day 7 you go get a small no on purpose, like asking for a free sample, so your brain learns a no is over in seconds. By Week 3, you're having easy talks with people you already see, at the gym and at church, where you're already in a room full of people every Sunday. That's how the water fountain turns from a big moment into a normal Tuesday.
@@ -128,7 +147,8 @@ You already tried the usual stuff. Your buddy said "just go talk to her bro," an
 ## Checks against the rules
 
 - Quotes from him: 4, each under 12 words, each followed by what it means.
-- One stat, from the approved list, source named (Huang and others, 2017).
+- No stats in the AI text. Numbers and sources appear only in the 2 fixed belief cards. The 2 personal lines have no numbers and are under 25 words each.
+- "What's actually true" doesn't repeat the cards (scripting and looks are covered there; it keeps "not a natural" and "that laugh was one moment").
 - Faith: he brought up church, so it appears once, lightly ("a room full of people every Sunday"). No verses.
 - No promise of a date, girlfriend or wife. No pickup words. No diagnosis words. No em dashes.
 - Gym step follows the respect rule: only when she's resting, no headphones, short, easy exit.

@@ -135,6 +135,7 @@ Then a calm loading screen: "Reading what you wrote...", "Looking for the thread
 - **His real "why"** gets its own section.
 - **Steps in his places, in plain English,** one place per step, with exactly what to say. No "Parrot" or other names without an explanation.
 - **The bridge** is "here's your first week," not a list of chapters. The offer box is the same.
+- **New: belief cards** near the end ("What you've been telling yourself vs. what the research says"). Up to 2 of his limiting beliefs, each with a real research finding that pushes back on it. The facts, numbers and sources are written by us and never change. The AI only picks which cards fit him and adds one short line tying it to his words (no numbers allowed). This replaced the old "one stat inline" rule. All 8 cards are listed in COPY.md, section 6.
 - **Smarter model** (Sonnet instead of Haiku). Results take about 20 to 45 seconds instead of 10 to 25.
 
 ### His quick taps
@@ -200,7 +201,6 @@ Now look at the rest of your life. You've lifted for three years. Your dad taugh
 
 #### What's actually true
 
-- **You don't need a script.** The talk you write in your head doesn't need to exist. A first sentence can be plain, like "Hey, how's your workout going?" One study (Huang and others, 2017) found that people who ask more follow-up questions are liked more. A simple question and real listening beat a perfect line.
 - **Nobody is a natural.** You said you're "not a natural." Neither is anyone. The guys who look natural just took more reps, earlier. A little nervous but kind beats smooth. Your nerves aren't what lose the moment. The waiting is.
 - **That laugh was one moment.** One girl, one dance, one bad answer, back in 10th grade. It was never a verdict on who you are at 24. A no is one person's answer to one question, on one day. You can relearn that in small doses.
 
@@ -232,6 +232,24 @@ This is the one you named yourself. Don't plan a speech. If she's resting and ha
 *Done when: You said hi and one thing, then let it end well.* (fixed)
 
 *A step counts when you do it, not when it goes well.*
+
+#### What you've been telling yourself vs. what the research says
+
+*These facts are fixed. The AI didn't write them, and each one names where it came from.* (fixed)
+
+> *"I'll say something stupid. I need the right line."*  
+> **WHAT THE RESEARCH SAYS** (fixed)  
+> In studies of real conversations and speed dates, people who asked more follow-up questions (questions about what the other person just said) were liked more. Speed daters who did it got more yeses for a second date. No line needed, just interest.  
+> <small>Huang and others, Harvard, 2017</small>  
+> **You don't need the script you write at the water fountain. Ask about her workout, then really listen to what she says.** (AI line)
+
+> *"I'm not good-looking enough."*  
+> **WHAT THE RESEARCH SAYS** (fixed)  
+> Looks do matter some, for everyone. But in speed-dating research, the "must-haves" people listed ahead of time did a poor job of guessing who they actually liked once they met in person. In other studies, women rated kind men as more attractive partners for the long run, and kindness helped most for men who weren't the best-looking.  
+> <small>Eastwick and Finkel, 2008; Farrelly and others, 2016</small>  
+> **You put looks on your list. Your crew made you team lead. Being kind and steady counts here too, maybe more than you think.** (AI line)
+
+*What you feel isn't always what's true. And confidence is something you can learn.* (fixed)
 
 #### What your first week could look like
 

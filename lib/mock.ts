@@ -33,10 +33,6 @@ export const MOCK_RESULT: AiResult = {
   ],
   whats_true: [
     {
-      title: "You don't need a script",
-      text: "The talk you write in your head doesn't need to exist. A first sentence can be plain, like \"Hey, how's your workout going?\" One study (Huang and others, 2017) found that people who ask more follow-up questions are liked more. A simple question and real listening beat a perfect line.",
-    },
-    {
       title: "Nobody is a natural",
       text: "You said you're \"not a natural.\" Neither is anyone. The guys who look natural just took more reps, earlier. A little nervous but kind beats smooth. Your nerves aren't what lose the moment. The waiting is.",
     },
@@ -70,6 +66,18 @@ export const MOCK_RESULT: AiResult = {
       when_where: "Tuesday at the gym, when she's at the fountain between sets",
       what_to_do:
         "This is the one you named yourself. Don't plan a speech. If she's resting and has no headphones in, say one plain thing: \"Hey, how's your workout going?\" Listen, say one thing back, then let her get back to it: \"Have a good one.\" If she gives a short answer, smile and go. You still did it.",
+    },
+  ],
+  belief_cards: [
+    {
+      id: "perfect_line",
+      personal_line:
+        "You don't need the script you write at the water fountain. Ask about her workout, then really listen to what she says.",
+    },
+    {
+      id: "looks",
+      personal_line:
+        "You put looks on your list. Your crew made you team lead. Being kind and steady counts here too, maybe more than you think.",
     },
   ],
   first_week:

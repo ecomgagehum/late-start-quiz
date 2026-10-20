@@ -70,6 +70,20 @@ async function run() {
   await page.waitForSelector(".typecard", { timeout: 60000 });
   await shot("11-results-top");
   await shot("12-results-full", true);
+  // The belief cards section (his beliefs vs. fixed research), as one phone-width shot of just that section.
+  const beliefs = page.locator("section", { has: page.locator("ul.beliefs") });
+  await beliefs.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(250);
+  await beliefs.screenshot({ path: path.join(OUT, "belief-cards.png") });
+  console.log("saved belief-cards | cards:", await page.locator("ul.beliefs > li").count());
+  const m = await page.evaluate(() => {
+    const art = document.querySelector("article");
+    const words = (art.innerText.match(/\S+/g) || []).length;
+    const h = document.documentElement.scrollHeight;
+    const top = (sel) => { const el = [...document.querySelectorAll("h3")].find((x) => x.textContent.startsWith(sel)); return el ? Math.round(el.getBoundingClientRect().top + scrollY) : -1; };
+    return { words, height: h, screens: +(h / innerHeight).toFixed(1), steps: top("Your 3 steps"), beliefs: top("What you"), offer: Math.round(document.querySelector(".offer").getBoundingClientRect().top + scrollY), vh: innerHeight, sideScroll: document.documentElement.scrollWidth > innerWidth };
+  });
+  console.log("results page:", JSON.stringify(m));
 
   // Retake in the same visit: the request must say alreadySaved (no second signup)
   let lastBody = null;

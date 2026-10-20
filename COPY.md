@@ -133,11 +133,29 @@ The AI writes about 800 to 1,000 words in total. Full example: SAMPLE_RESULT_V2.
 |---|---|---|
 | Type card (navy) | YOUR PATTERN / [type name] / [fixed tagline] | Name and tagline fixed by the page (below). Then 1 to 2 sentences on how it shows up in HIS life (AI, `type_reason`). |
 | 1 | What's really going on | AI, 3 or 4 short paragraphs: where it started (his past), how it shows up now (the moment he described), what it protects him from and what it costs, why it's learnable. Uses his words as evidence (max 4 short quotes), then says what they mean. |
-| 2 | What's actually true | AI, 2 or 3 items (short title + 2 to 4 sentences). Kindly corrects the story he tells himself (question 9). At most one stat, only from the approved list, source named. |
+| 2 | What's actually true | AI, 2 items (3 only if new). Kindly corrects the parts of the story he tells himself (question 9) that the belief cards don't cover, using his own life as evidence. No numbers, studies or sources. |
 | 3 | Why this matters to you | AI, one paragraph on his deepest reason (question 7). The emotional center. Shown larger, in a soft box. |
 | 4 | The honest cost of waiting | AI, one calm paragraph. Uses his own future picture. No fear tactics, no fake numbers. |
 | 5 | Your 3 steps this week | Small line: "Easiest first. Each one makes the next one easier." AI picks 3 reps ONLY from the fixed list below, and writes a short headline, "When:" (his day and place) and exactly what to say or do. The page adds OUR "Done when:" line. Under the steps: "A step counts when you do it, not when it goes well." |
-| 6 | What your first week could look like | AI, two paragraphs: what HIS first week in the plan looks like (Day 0, then Week 1 reps in his places), and why a plan fits him given what he already tried. Only real plan parts. Then the fixed offer box. |
+| 6 | What you've been telling yourself vs. what the research says | Only shows if the AI picked at least 1 card. Small line under the heading: "These facts are fixed. The AI didn't write them, and each one names where it came from." Then 0 to 2 cards. Each card: his belief in quotes, "WHAT THE RESEARCH SAYS", the fixed finding, the fixed source line (small), then ONE line from the AI tying it to his words (10 to 20 words, max 25, no numbers; the page drops any sentence with a number or study). Closing line: "What you feel isn't always what's true. And confidence is something you can learn." |
+| 7 | What your first week could look like | AI, two paragraphs: what HIS first week in the plan looks like (Day 0, then Week 1 reps in his places), and why a plan fits him given what he already tried. Only real plan parts. Then the fixed offer box. |
+
+### The fixed belief cards (the ONLY stats on the page)
+
+The AI picks up to 2 by id and never writes a number. It never sees the numbers: it gets a plain summary of each card. "behind" and "no_means" share a number, so the page never shows both.
+
+| id | Belief (in his voice) | What the research says (fixed) | Source line (fixed) |
+|---|---|---|---|
+| behind | "I'm way behind everyone else." | In Hinge's 2024 Gen Z dating report (about 15,000 daters), 44% of Gen Z users said they have little or no dating experience. More than half (56%) said worrying about rejection has stopped them from going after someone. | Hinge Gen Z D.A.T.E. Report, 2024 (an app survey) |
+| perfect_line | "I'll say something stupid. I need the right line." | In studies of real conversations and speed dates, people who asked more follow-up questions (questions about what the other person just said) were liked more. Speed daters who did it got more yeses for a second date. No line needed, just interest. | Huang and others, Harvard, 2017 |
+| looks | "I'm not good-looking enough." | Looks do matter some, for everyone. But in speed-dating research, the "must-haves" people listed ahead of time did a poor job of guessing who they actually liked once they met in person. In other studies, women rated kind men as more attractive partners for the long run, and kindness helped most for men who weren't the best-looking. | Eastwick and Finkel, 2008; Farrelly and others, 2016 |
+| bother | "She doesn't want me to talk to her." | In a 2024 Bumble survey of 2,267 U.S. women on the app, 66% said they'd rather the man send the first message. Most women want men to start, as long as it's respectful, easy to walk away from, and a no is taken well. | Bumble survey of U.S. women users, 2024 (an app survey) |
+| not_natural | "I'm just not a natural. Some guys have it." | Calm, low-key confidence is what helps. Acting cocky or "alpha" backfires, because coming off cocky cancels out the boost confidence gives you. And opening up lands better than people expect: in Hinge's 2025 survey, 52% of daters felt ashamed after opening up, but only 19% said they feel uncomfortable when someone else opens up. Confidence is a skill you build, not something you're born with. | Murphy and others, 2015; Hinge D.A.T.E. Report, 2025 (an app survey) |
+| no_places | "There's nowhere for me to meet anyone." | In a 2023 national survey, about half of women ages 18 to 29 who were in a relationship were friends with their partner before they dated. A lot of couples start in everyday life, like friend groups and shared activities. | American Enterprise Institute, Survey Center on American Life, 2023 |
+| nice_guy | "Nice guys finish last." | In a study of 37 cultures around the world, "kind and understanding" ranked at or near the top of what women want in a partner, in every one. What doesn't work is being passive, not being kind. | Buss, 1989 |
+| no_means | "If she says no, it proves something's wrong with me." | Lots of guys feel this way: 56% of Gen Z daters in Hinge's survey said fear of rejection stopped them. But how you handle a no is one of the biggest trust signals there is, because so many women have had men get pushy after a no (in Pew's 2023 survey, 43% of women under 50 who'd used dating apps were contacted again after saying they weren't interested). A calm "No worries, have a good one" makes you the safe one. A no is about one moment, not about you. | Hinge Gen Z D.A.T.E. Report, 2024; Pew Research Center, 2023 |
+
+If the AI can't finish (backup result), the page shows 1 card by type with no AI line: not_natural (Over-Scripter, Someday Guy), no_places (Closed Loop), no_means (Old Rule).
 
 Fixed type names and taglines (Kajabi tags unchanged):
 
@@ -270,7 +288,7 @@ Privacy Policy (https://start.confidenceofayes.com/privacy-policy) · Terms (/te
 
 For [first name]
 My quiz results (The Confidence of a Yes)
-Your pattern (name, tagline, why), What's really going on, What's actually true, Why this matters to you, The honest cost of waiting, Your 3 steps this week (with When and Done when), What your first week could look like, and the 30-day plan link.
+Your pattern (name, tagline, why), What's really going on, What's actually true, Why this matters to you, The honest cost of waiting, Your 3 steps this week (with When and Done when), the belief cards (belief, research, source, his line), What your first week could look like, and the 30-day plan link.
 
 ---
 

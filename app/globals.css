@@ -188,6 +188,15 @@ input:focus { border-color: var(--navy-2); }
 .why p { font-family: var(--serif); font-size: 20px; color: var(--navy); background: var(--paper); border-radius: 12px; padding: 16px; margin: 0; }
 .steps .done { font-size: 14px; color: var(--green-dark); margin: 6px 0 0; font-weight: 600; }
 .quiet { font-family: var(--serif); font-size: 20px; color: var(--navy); border-left: 4px solid var(--line); padding-left: 14px; }
+/* belief cards: his belief (in his voice) vs. fixed research */
+.beliefs { list-style: none; padding: 0; margin: 0; }
+.beliefs li { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+.beliefs .belief { font-family: var(--serif); font-size: 19px; font-style: italic; color: var(--maroon); margin: 0 0 10px; }
+.beliefs .label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green-dark); margin: 0 0 4px; }
+.beliefs .research { margin: 0 0 6px; }
+.beliefs .source { font-size: 13px; color: var(--muted); margin: 0; }
+.beliefs .personal { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); font-weight: 600; color: var(--navy); }
+.beliefs-outro { font-family: var(--serif); font-size: 19px; color: var(--navy); margin: 4px 0 0; }
 .offer { background: var(--paper); border: 2px solid var(--gold); border-radius: var(--radius); padding: 20px 18px; margin-top: 14px; }
 .offer ul { padding-left: 20px; margin: 8px 0 16px; }
 .offer li { margin-bottom: 8px; }

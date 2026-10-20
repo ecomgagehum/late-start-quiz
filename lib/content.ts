@@ -271,12 +271,90 @@ export const PLAN_PARTS = [
   "The AI Practice Partner: practice saying hi, keeping a chat going, and the ask, out loud, before doing it for real. For practice, never for scripts.",
 ];
 
-// The only research the AI may cite. At most ONE per result, worded with its source named.
-export const RESEARCH = [
-  "In one big dating app survey (Hinge, 2024), 44% of Gen Z users said they have little or no dating experience.",
-  "One study (Huang and others, 2017) found that people who ask more follow-up questions are liked more.",
-  "A 2023 survey (American Enterprise Institute) found about half of young women in relationships were friends with their partner first.",
-];
+// Belief cards (Oct 20, 2026). The ONLY place a number or study shows up on the results page.
+// Every word here is fixed and shown by the page as written. The AI never writes a number.
+// The AI only picks up to 2 ids that match his answers, plus one short personal line per card (no numbers).
+// belief = what he tells himself, in his voice. research = what the research says (plain words). source = small line.
+// gist = what the AI is told the card says (no numbers on purpose, so it has none to echo). fit = when to pick it (AI only).
+export type BeliefId = "behind" | "perfect_line" | "looks" | "bother" | "not_natural" | "no_places" | "nice_guy" | "no_means";
+
+export const BELIEFS: Record<BeliefId, { belief: string; research: string; source: string; gist: string; fit: string }> = {
+  behind: {
+    belief: "I'm way behind everyone else.",
+    research:
+      "In Hinge's 2024 Gen Z dating report (about 15,000 daters), 44% of Gen Z users said they have little or no dating experience. More than half (56%) said worrying about rejection has stopped them from going after someone.",
+    source: "Hinge Gen Z D.A.T.E. Report, 2024 (an app survey)",
+    gist: "Lots of young daters say they have little or no dating experience, and more than half say fear of rejection has stopped them. He is not the only one.",
+    fit: "He says he's behind, late, wasted his youth, or that everyone else has dated but him.",
+  },
+  perfect_line: {
+    belief: "I'll say something stupid. I need the right line.",
+    research:
+      "In studies of real conversations and speed dates, people who asked more follow-up questions (questions about what the other person just said) were liked more. Speed daters who did it got more yeses for a second date. No line needed, just interest.",
+    source: "Huang and others, Harvard, 2017",
+    gist: "People who ask follow-up questions about what the other person just said are liked more, even on speed dates. Interest beats a clever line.",
+    fit: "He scripts, plans lines, goes blank, is afraid of saying something dumb, or thinks he needs the right opener.",
+  },
+  looks: {
+    belief: "I'm not good-looking enough.",
+    research:
+      "Looks do matter some, for everyone. But in speed-dating research, the \"must-haves\" people listed ahead of time did a poor job of guessing who they actually liked once they met in person. In other studies, women rated kind men as more attractive partners for the long run, and kindness helped most for men who weren't the best-looking.",
+    source: "Eastwick and Finkel, 2008; Farrelly and others, 2016",
+    gist: "Looks matter some, but what people say they want ahead of time doesn't predict who they like in person, and kindness makes a man more attractive, most of all if he isn't the best-looking guy.",
+    fit: "He says he's not good-looking enough, too short, too skinny, too heavy, or ugly.",
+  },
+  bother: {
+    belief: "She doesn't want me to talk to her.",
+    research:
+      "In a 2024 Bumble survey of 2,267 U.S. women on the app, 66% said they'd rather the man send the first message. Most women want men to start, as long as it's respectful, easy to walk away from, and a no is taken well.",
+    source: "Bumble survey of U.S. women users, 2024 (an app survey)",
+    gist: "Most women on one big dating app said they'd rather the man start, as long as it's respectful, easy to walk away from, and a no is taken well.",
+    fit: "He's afraid of bothering her, being creepy, or interrupting, or thinks women don't want to be approached.",
+  },
+  not_natural: {
+    belief: "I'm just not a natural. Some guys have it.",
+    research:
+      "Calm, low-key confidence is what helps. Acting cocky or \"alpha\" backfires, because coming off cocky cancels out the boost confidence gives you. And opening up lands better than people expect: in Hinge's 2025 survey, 52% of daters felt ashamed after opening up, but only 19% said they feel uncomfortable when someone else opens up. Confidence is a skill you build, not something you're born with.",
+    source: "Murphy and others, 2015; Hinge D.A.T.E. Report, 2025 (an app survey)",
+    gist: "Calm confidence helps and cocky backfires. Being open about yourself lands better than people fear. Confidence is built, not born.",
+    fit: "He says he's not a natural, not smooth, not confident, or that some guys just have it.",
+  },
+  no_places: {
+    belief: "There's nowhere for me to meet anyone.",
+    research:
+      "In a 2023 national survey, about half of women ages 18 to 29 who were in a relationship were friends with their partner before they dated. A lot of couples start in everyday life, like friend groups and shared activities.",
+    source: "American Enterprise Institute, Survey Center on American Life, 2023",
+    gist: "About half of young women in relationships were friends with their partner first. A lot of couples start in everyday life, like friend groups and shared activities.",
+    fit: "He says there's nowhere to meet anyone, his week has no new people, or he hates bars and apps.",
+  },
+  nice_guy: {
+    belief: "Nice guys finish last.",
+    research:
+      "In a study of 37 cultures around the world, \"kind and understanding\" ranked at or near the top of what women want in a partner, in every one. What doesn't work is being passive, not being kind.",
+    source: "Buss, 1989",
+    gist: "Across many cultures, kind and understanding ranks at or near the top of what women want. Being passive is the problem, not being kind.",
+    fit: "He says nice guys finish last, women want jerks or bad boys, or being kind hasn't worked for him.",
+  },
+  no_means: {
+    belief: "If she says no, it proves something's wrong with me.",
+    research:
+      "Lots of guys feel this way: 56% of Gen Z daters in Hinge's survey said fear of rejection stopped them. But how you handle a no is one of the biggest trust signals there is, because so many women have had men get pushy after a no (in Pew's 2023 survey, 43% of women under 50 who'd used dating apps were contacted again after saying they weren't interested). A calm \"No worries, have a good one\" makes you the safe one. A no is about one moment, not about you.",
+    source: "Hinge Gen Z D.A.T.E. Report, 2024; Pew Research Center, 2023",
+    gist: "Fear of a no stops lots of guys. Taking a no calmly is a big trust signal, because many women have had men get pushy after a no. A no is about one moment, not about him.",
+    fit: "An old no or being laughed at still hurts, or he thinks a no would prove something is wrong with him.",
+  },
+};
+
+export const BELIEF_IDS = Object.keys(BELIEFS) as BeliefId[];
+
+// These two cards share the 56% Hinge number. Never show both on one page (the validator keeps the first).
+export const BELIEF_CLASHES: [BeliefId, BeliefId][] = [["behind", "no_means"]];
+
+export const BELIEF_SECTION = {
+  title: "What you've been telling yourself vs. what the research says",
+  intro: "These facts are fixed. The AI didn't write them, and each one names where it came from.",
+  outro: "What you feel isn't always what's true. And confidence is something you can learn.",
+};
 
 export const OFFER = {
   name: "The Late Start: The 30-Day Plan for Guys Who've Never Dated",
