@@ -86,37 +86,37 @@ export const QUESTIONS: { id: string; text: string; helper: string }[] = [
   },
   {
     id: "q4",
-    text: "Has anything happened before that still makes this harder? Only share what you want.",
+    text: "Has anything happened in the past that makes talking to women harder for you now? Only share what you want.",
     helper: "A no that stung, something someone said, a moment that stuck. Or skip it.",
   },
   {
     id: "q5",
-    text: "How does it feel being where you are with this right now?",
-    helper: "Say it how it really is. Gage never sees your answers.",
+    text: "How do you feel about where you are with women and dating right now?",
+    helper: "Lonely, frustrated, embarrassed, fine, hopeful. Say it how it really is. Gage never sees your answers.",
   },
   {
     id: "q6",
-    text: "Picture a year from now, and this part of life is going well. What does a normal week look like?",
-    helper: "Who are you with? Where do you go? How do you feel?",
+    text: "A year from now, if dating and confidence were going well for you, what would your life look like?",
+    helper: "Who are you with? What do your weekends look like? How do you feel about yourself?",
   },
   {
     id: "q7",
-    text: "Why does a week like that matter to you?",
-    helper: "Give the real reason, not just the first one that pops up. (Skipped the last question? Think of the week you wish you had.)",
+    text: "Is getting to that life important to you? If so, why?",
+    helper: "Give the real reason, not just the first one that pops up. (Skipped the last question? Think of the life you wish you had.)",
   },
   {
     id: "q8",
-    text: "What have you tried so far? Apps, videos, anything. How did it go?",
-    helper: "It's fine if the answer is \"nothing yet.\"",
+    text: "What have you tried so far to get better at talking to women or dating? How did it go?",
+    helper: "Dating apps, videos, books, asking friends, going out more. It's fine if the answer is \"nothing yet.\"",
   },
   {
     id: "q9",
-    text: "What do you tell yourself is the reason it hasn't happened yet?",
+    text: "What do you tell yourself is the reason you're not where you want to be with women yet?",
     helper: "The thought that shows up when you're by yourself.",
   },
   {
     id: "q10",
-    text: "If you could try one small thing this week, what would you do? What would make it hard?",
+    text: "If you could try one small thing this week to talk to more people, what would you do? What would make it hard?",
     helper: "Small is good. Like saying hi to someone you see every week.",
   },
 ];

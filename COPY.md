@@ -54,13 +54,13 @@ The voice tip shows once, on question 1: **Tip: tap the mic on your keyboard and
 | 1 | Tell me a little about you. What are you into, and what are you good at? | Hobbies, work, sports, games, faith, anything. There are no wrong answers. |
 | 2 | Walk me through a normal week. Where do you go, and who do you talk to? | Work, the gym, church, online, home. Just say how it really is. |
 | 3 | Think of the last time you wanted to talk to a woman and didn't. What happened, and what went through your head? | Where were you? What did you think right before you didn't? (Or a time you wanted to talk to anyone and didn't.) |
-| 4 | Has anything happened before that still makes this harder? Only share what you want. | A no that stung, something someone said, a moment that stuck. Or skip it. |
-| 5 | How does it feel being where you are with this right now? | Say it how it really is. Gage never sees your answers. |
-| 6 | Picture a year from now, and this part of life is going well. What does a normal week look like? | Who are you with? Where do you go? How do you feel? |
-| 7 | Why does a week like that matter to you? | Give the real reason, not just the first one that pops up. (Skipped the last question? Think of the week you wish you had.) |
-| 8 | What have you tried so far? Apps, videos, anything. How did it go? | It's fine if the answer is "nothing yet." |
-| 9 | What do you tell yourself is the reason it hasn't happened yet? | The thought that shows up when you're by yourself. |
-| 10 | If you could try one small thing this week, what would you do? What would make it hard? | Small is good. Like saying hi to someone you see every week. |
+| 4 | Has anything happened in the past that makes talking to women harder for you now? Only share what you want. | A no that stung, something someone said, a moment that stuck. Or skip it. |
+| 5 | How do you feel about where you are with women and dating right now? | Lonely, frustrated, embarrassed, fine, hopeful. Say it how it really is. Gage never sees your answers. |
+| 6 | A year from now, if dating and confidence were going well for you, what would your life look like? | Who are you with? What do your weekends look like? How do you feel about yourself? |
+| 7 | Is getting to that life important to you? If so, why? | Give the real reason, not just the first one that pops up. (Skipped the last question? Think of the life you wish you had.) |
+| 8 | What have you tried so far to get better at talking to women or dating? How did it go? | Dating apps, videos, books, asking friends, going out more. It's fine if the answer is "nothing yet." |
+| 9 | What do you tell yourself is the reason you're not where you want to be with women yet? | The thought that shows up when you're by yourself. |
+| 10 | If you could try one small thing this week to talk to more people, what would you do? What would make it hard? | Small is good. Like saying hi to someone you see every week. |
 
 Each question has its own job: Q1 who he is and what he's good at (strengths, things to talk about), Q2 where he goes and who he sees, Q3 the real moment, Q4 old hurts, Q5 the cost, Q6 the future picture, Q7 his real reason, Q8 what he tried, Q9 the story he tells himself, Q10 one small yes.
 

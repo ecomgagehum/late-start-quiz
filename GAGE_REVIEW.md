@@ -72,31 +72,31 @@ Think of the last time you wanted to talk to a woman and didn't. What happened, 
 *Where were you? What did you think right before you didn't? (Or a time you wanted to talk to anyone and didn't.)*
 
 **Question 4**
-Has anything happened before that still makes this harder? Only share what you want.
+Has anything happened in the past that makes talking to women harder for you now? Only share what you want.
 *A no that stung, something someone said, a moment that stuck. Or skip it.*
 
 **Question 5**
-How does it feel being where you are with this right now?
-*Say it how it really is. Gage never sees your answers.*
+How do you feel about where you are with women and dating right now?
+*Lonely, frustrated, embarrassed, fine, hopeful. Say it how it really is. Gage never sees your answers.*
 
 **Question 6**
-Picture a year from now, and this part of life is going well. What does a normal week look like?
-*Who are you with? Where do you go? How do you feel?*
+A year from now, if dating and confidence were going well for you, what would your life look like?
+*Who are you with? What do your weekends look like? How do you feel about yourself?*
 
 **Question 7**
-Why does a week like that matter to you?
-*Give the real reason, not just the first one that pops up. (Skipped the last question? Think of the week you wish you had.)*
+Is getting to that life important to you? If so, why?
+*Give the real reason, not just the first one that pops up. (Skipped the last question? Think of the life you wish you had.)*
 
 **Question 8**
-What have you tried so far? Apps, videos, anything. How did it go?
-*It's fine if the answer is "nothing yet."*
+What have you tried so far to get better at talking to women or dating? How did it go?
+*Dating apps, videos, books, asking friends, going out more. It's fine if the answer is "nothing yet."*
 
 **Question 9**
-What do you tell yourself is the reason it hasn't happened yet?
+What do you tell yourself is the reason you're not where you want to be with women yet?
 *The thought that shows up when you're by yourself.*
 
 **Question 10**
-If you could try one small thing this week, what would you do? What would make it hard?
+If you could try one small thing this week to talk to more people, what would you do? What would make it hard?
 *Small is good. Like saying hi to someone you see every week.*
 
 Last button says: **Almost done**
