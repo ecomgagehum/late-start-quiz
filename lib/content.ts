@@ -57,9 +57,9 @@ export const TAPS: Tap[] = [
     id: "want",
     question: "What do you want most right now?",
     options: [
-      { id: "stop_freezing", label: "Stop freezing up" },
+      { id: "stop_freezing", label: "Stay calm when it's time to talk" },
       { id: "meet_people", label: "Meet more people" },
-      { id: "confidence", label: "Feel more confident" },
+      { id: "confidence", label: "Feel sure of myself" },
       { id: "ask_out", label: "Ask a girl out" },
       { id: "friends", label: "Make more friends" },
     ],
@@ -123,121 +123,159 @@ export const QUESTIONS: { id: string; text: string; helper: string }[] = [
 
 export type TypeId = "freezer" | "no_places" | "burned_before" | "never_started";
 
-// Same 4 types as the free Starter Kit, so emails and videos still match.
-export const TYPES: Record<TypeId, { name: string; tag: string; meaning: string }> = {
+// The 4 types. The ids and Kajabi tags stay the same as the Starter Kit (so tagging keeps working).
+// The display names name the HIDDEN pattern behind the symptom, not the symptom he tapped.
+// name + tagline are fixed and shown by the page. meaning is for the AI only.
+export const TYPES: Record<TypeId, { name: string; tag: string; tagline: string; meaning: string }> = {
   freezer: {
-    name: "The Freezer",
+    name: "The Over-Scripter",
     tag: "Quiz - Freezer",
+    tagline: "Your brain writes the whole talk first, so nothing can go wrong. By the time the script is done, the moment is gone.",
     meaning:
-      "Not bad at talking. His brain hits the brakes when it matters most. Nerves, not a flaw. Needs a plan for the blank moment plus small reps.",
+      "He is around people and can talk. When it matters, his brain tries to plan every line so he can't mess up. Planning feels safe, but it eats the moment. The protection: if it's perfect, nobody can laugh or say no. The cost: the moment passes and he blames himself. The fix: drop the script. A plain, honest first sentence about the moment, then listen. Short, small reps until starting feels normal.",
   },
   no_places: {
-    name: "The No-Places Guy",
+    name: "The Closed Loop",
     tag: "Quiz - No-Places Guy",
+    tagline: "Your week runs on the same few places and the same few people. You're not the problem. There's just no door for anyone new.",
     meaning:
-      "Would talk to people, but there aren't many in his week. Work, home, maybe the gym. When school ended, the easy places dried up. Needs more people in his week first.",
+      "He would talk to people, but his week is a closed loop: work, home, maybe the gym, mostly the same faces. When school ended, the easy places dried up. The protection: a loop is safe and needs no risk. The cost: nobody new can walk in, so nothing changes. The fix: add one weekly place where he sees the same people again, and reach back to people he already knows.",
   },
   burned_before: {
-    name: "Burned Before",
+    name: "The Old Rule",
     tag: "Quiz - Burned Before",
+    tagline: "One moment that stung wrote a rule: don't try, and it can't happen again. The moment is over. The rule is still running.",
     meaning:
-      "Tried, and it stung. Maybe someone laughed, or a no hit hard. Now his brain keeps him safe by keeping him quiet. Needs to make no small again, on purpose.",
+      "He tried once and it hurt. Someone laughed, or a no hit hard, maybe in front of people. His brain made a rule to keep him safe: don't put yourself out there. The rule worked, so it stayed. The cost: it still makes his choices years later. The fix: show his brain, on purpose and in small doses, that a no is short and survivable, and that he can leave with his head up.",
   },
   never_started: {
-    name: "Never Started",
+    name: "The Someday Guy",
     tag: "Quiz - Never Started",
+    tagline: "You're waiting to feel ready first. But ready shows up after the first steps, not before them.",
     meaning:
-      "Not behind. Never got a step 1. Kept waiting to feel ready. Needs one small thing today, not more thinking.",
+      "Not behind. He never got a step 1, so he keeps waiting to feel ready, sure, or good enough. The protection: if he never starts, he can never fail. The cost: someday keeps sliding. The fix: one small, easy thing this week, done before he feels ready, so ready can catch up.",
   },
 };
 
-// Real reps from The Late Start workbook (Act 1 action steps, Week 1, and the When You Freeze card).
-// The AI must pick 3 by id. The page always shows OUR title and done-when, never invented ones.
-export const REPS: Record<string, { title: string; rep: string; doneWhen: string }> = {
+// Real reps from The Late Start workbook (Week 1 reps, Act 1 action steps, Week 2-3 reps, the When You Freeze card).
+// The AI must pick 3 by id and may only fit them to his places, times and words.
+// title = plain-English name the page can show. doneWhen is always ours, never AI-written.
+// fit = when the rep is a good pick (AI only).
+export const REPS: Record<string, { title: string; rep: string; doneWhen: string; fit: string }> = {
   social_battery: {
-    title: "Warm up your social battery",
-    rep: "On a morning walk, say hi to people you pass. A little small talk. \"Have a good one.\" Do it each morning.",
-    doneWhen: "You said hi to a few people on your walk.",
-  },
-  day1_hi_question: {
-    title: "Hi + one question",
-    rep: "Say hi to a cashier, barista or server and ask one real question: \"How's your day going?\" or \"What's good here?\" Listen to the answer.",
-    doneWhen: "You asked and listened.",
-  },
-  day2_compliment_choice: {
-    title: "Notice something they chose",
-    rep: "Give one honest compliment to anyone, guy or girl, about something they chose: shoes, dog, shirt, order. Never their body. \"Cool hat. Where'd you get it?\"",
-    doneWhen: "You said it out loud.",
-  },
-  day3_recommendation: {
-    title: "Ask for a recommendation",
-    rep: "Ask a stranger or staff member what they'd recommend: best thing on the menu, a good book, a trail nearby.",
-    doneWhen: "You asked and said thanks.",
+    title: "Warm up on the way",
+    rep: "On a walk or on the way somewhere, say hi to people you pass. A nod, a smile, \"Have a good one.\" No full talks needed. It warms you up so talking later doesn't feel like flipping a cold switch.",
+    doneWhen: "You said hi to a few people on the way.",
+    fit: "Easiest first step for anyone. Great right before a place where he wants to talk (the gym, work, church).",
   },
   day4_eye_contact: {
-    title: "Eye contact + nod, five times",
+    title: "Eye contact and a nod, five times",
     rep: "Look five people in the eye and give a small nod or soft smile. That's it. It trains your body to stop looking at the floor.",
     doneWhen: "You hit five.",
+    fit: "Very easy first step. Good when even saying hi feels like too much.",
+  },
+  day1_hi_question: {
+    title: "Say hi and ask one real question",
+    rep: "Say hi to a cashier, barista or server and ask one real question: \"How's your day going?\" or \"What's good here?\" Then listen to the answer.",
+    doneWhen: "You asked and listened.",
+    fit: "Low-stakes practice at saying the first sentence. Best at a place he goes often (his coffee spot, lunch spot, gas station).",
   },
   day5_waiting_chat: {
-    title: "The waiting-room chat",
-    rep: "In a line, waiting room or elevator, say one thing about the shared moment: \"This line is wild today.\"",
+    title: "Say one thing about the moment you share",
+    rep: "In a line, a waiting room or an elevator, say one plain thing about what you're both in: \"This line is wild today.\" No clever line needed. Nobody remembers the first sentence.",
     doneWhen: "You said it, whatever they said back.",
+    fit: "Teaches that a plain comment about the moment is enough. Great for a guy who scripts or thinks he needs a perfect opener.",
   },
-  text_old_friend: {
-    title: "Text one old friend",
-    rep: "Text someone you used to know: \"Hey man, saw [thing] and thought of you. How've you been?\" If he answers, ask him to grab lunch or hit the gym this week.",
-    doneWhen: "The message is sent.",
+  day2_compliment_choice: {
+    title: "Compliment something they chose",
+    rep: "Give one honest compliment to anyone, guy or girl, about something they chose: shoes, dog, shirt, order. Never their body. \"Cool hat. Where'd you get it?\"",
+    doneWhen: "You said it out loud.",
+    fit: "A step up from hi. Good for practice with anyone, not only women.",
+  },
+  day3_recommendation: {
+    title: "Ask what they'd recommend",
+    rep: "Ask a stranger or staff member what they'd recommend: best thing on the menu, a good book, a trail nearby. Say thanks.",
+    doneWhen: "You asked and said thanks.",
+    fit: "Easy question that gets people talking. Good at a coffee shop, store or restaurant he already goes to.",
   },
   day7_get_a_no: {
-    title: "Go get a \"no\"",
-    rep: "Ask for something small you might not get: a first-time discount, a sample, someone to take your picture. Ask once, politely. Thank them either way.",
+    title: "Go get a small no on purpose",
+    rep: "Ask for something small you might not get: a first-time discount, a sample, someone to take your picture. Ask once, politely. Thank them either way. It teaches your brain that a no is small and over fast.",
     doneWhen: "You asked. Bonus if you heard \"no.\" Notice how fast the sting fades.",
+    fit: "Best for a guy held back by an old no or being laughed at. Shows him a no is survivable.",
   },
-  pick_weekly_thing: {
-    title: "Pick your one weekly thing",
-    rep: "Pick one thing that repeats every week, where you do something together, and men and women both go: a run club, rec league, church young adults group, volunteer shift, class or trivia night. Sign up or go once this week.",
-    doneWhen: "You picked it and signed up or showed up.",
-  },
-  find_organizer: {
-    title: "Find the organizer",
-    rep: "At a group, class or club, go a little early and find the person running it: \"Hey, first time here. Anything I should know?\"",
-    doneWhen: "You said it and learned one name.",
+  hi_regular: {
+    title: "Say hi to someone you see every week",
+    rep: "Pick someone you already see often (gym, work, church, your coffee spot). When she or he is not busy, say hi plus one short, friendly thing about the moment or one easy question. Then let it end kindly: \"Have a good one.\" Only when they can easily walk away. Never mid-workout, never with headphones in, never when they're stuck working.",
+    doneWhen: "You said hi and one thing, then let it end well.",
+    fit: "The bridge from strangers to people he sees every week. Use it when he named a real person or place in question 10, as the last (hardest) step.",
   },
   learn_a_name: {
     title: "Learn one name and use it",
     rep: "In a chat, say \"I'm [your name], by the way.\" Remember their name. Use it when you leave: \"Good talking with you, Mike.\"",
     doneWhen: "You learned a name and used it.",
+    fit: "Good for someone he sees every week (coworker, gym regular, church). Turns a face into a person.",
+  },
+  callback: {
+    title: "Bring back something they told you",
+    rep: "Bring up something someone told you before: \"How'd the 5K go?\" \"Did you end up getting that job?\" People feel remembered.",
+    doneWhen: "You made one callback.",
+    fit: "For a guy who already has small chats with coworkers or regulars and wants to go one step deeper.",
   },
   parrot: {
-    title: "Practice the Parrot",
-    rep: "When your mind goes blank, repeat the last thing they said as a question. She says, \"I'm really close with my brother.\" You say, \"Your brother?\" Try it once in a real chat.",
-    doneWhen: "You used it once.",
+    title: "Repeat their last words as a question",
+    rep: "Once a conversation has started and your mind goes blank, repeat the last thing they said as a question. She says, \"I'm really close with my brother.\" You say, \"Your brother?\" They keep going, and you get a second to think.",
+    doneWhen: "You used it once in a real chat.",
+    fit: "ONLY for a guy who can already start conversations but they die after a line or two. Never for a guy who can't get the first word out.",
+  },
+  text_old_friend: {
+    title: "Text one old friend",
+    rep: "Text someone you used to know: \"Hey man, saw [thing] and thought of you. How've you been?\" If he answers, ask him to grab lunch or hit the gym this week.",
+    doneWhen: "The message is sent.",
+    fit: "For a guy whose week has few people, or whose friends are mostly online. Friends bring friends.",
+  },
+  pick_weekly_thing: {
+    title: "Pick one thing you go to every week",
+    rep: "Pick one thing that repeats every week, where you do something together, and men and women both go: a run club, rec league, church young adults group, volunteer shift, class or trivia night. Sign up or go once this week. Seeing the same people every week is how strangers become friends.",
+    doneWhen: "You picked it and signed up or showed up.",
+    fit: "For a guy with few places in his week. If he goes to church, a young adults group there is a natural pick.",
+  },
+  find_organizer: {
+    title: "Talk to the person running the group",
+    rep: "At a group, class or club, go a little early and find the person running it: \"Hey, first time here. Anything I should know?\" They often introduce you to others.",
+    doneWhen: "You said it and learned one name.",
+    fit: "For a guy who already has a group or class to go to but feels like an outsider there.",
   },
   sort_your_week: {
-    title: "Sort your week: green, yellow, red",
-    rep: "List the places you'll be this week. Green: social by design (groups, classes, church events). Yellow: public but not social (coffee shop, store). Red: she's busy or stuck (mid-set at the gym, headphones in). Talk freely in green places.",
+    title: "Sort your week by where talking is normal",
+    rep: "List the places you'll be this week. Mark each one. Social places (groups, classes, church events): talk freely. Public places (coffee shop, store): a friendly comment is fine, and let it go if she doesn't keep it going. Busy moments (mid-workout, headphones in, she's working): just be polite, no flirting.",
     doneWhen: "You sorted every place you'll be this week.",
+    fit: "For a guy who freezes because he worries about being creepy or bothering people.",
   },
 };
 
 export const REP_IDS = Object.keys(REPS);
 
-// Real parts of The Late Start the AI may point to in plan_fit. Nothing else.
+// Real parts of The Late Start the AI may describe in the bridge. Nothing else. Plain words, no chapter numbers.
 export const PLAN_PARTS = [
-  "The Rep Ladder: 4 weeks, one small rep a day. Week 1 warm-up reps (strangers, low stakes). Week 2 stay-in reps (keep a conversation going 2 to 5 minutes). Week 3 real-life reps (women you already see every week, no agenda). Week 4 ask reps (one clear, kind ask).",
-  "Chapter 1, You're Not Behind. You're Starting: the three lies the \"behind\" voice tells you (\"I wasted my youth,\" \"She'll think something's wrong with me,\" \"If it was going to happen, it would have\"), and what you control besides looks.",
-  "Chapter 2, Build Your Circle: be a regular, not a visitor. Pick one weekly thing. Text one old friend. How to join a group when you know nobody.",
-  "Chapter 3, Respect First: the green, yellow, red rule for where it's OK to talk to her, how to tell interest from politeness, and the leave-well rule.",
-  "The When You Freeze card: Parrot, go back to something she said, have her say it again, ask about the moment, or end it well with her name.",
-  "The Notice, Ask, Follow loop for keeping a conversation going (Week 2).",
-  "The Places Map: where to go every week so you see the same people again. Familiarity beats first impressions.",
-  "The ask in one clear sentence: what you like + a simple plan + a specific day. \"Let's grab coffee Saturday.\" (Week 4)",
-  "Hear It, Leave Well, Reset: the 3 steps after a no, so one answer never ruins your week (Chapter 8).",
-  "Chapter 9, When She Says Yes: a simple first date, the 80/20 rule, and \"Do I tell her I've never dated?\"",
-  "The 30-Day Rep Tracker: see your progress in real numbers.",
-  "30 Rep Cards: today's rep on your phone.",
-  "The AI Practice Partner: practice saying hi, keeping it going, and the ask, before you do it for real.",
+  "Day 0 (about one hour, before any reps): three short reads with fill-in pages. 1) You're not behind, you're starting: the three lies the \"behind\" voice tells you (\"I wasted my youth,\" \"She'll think something's wrong with me,\" \"If it was going to happen, it would have\") and what he controls besides looks. 2) Build your circle: pick one thing he goes to every week, text one old friend, how to join a group when you know nobody. 3) Respect first: where it's normal to talk to someone, how to tell real interest from being polite, and how to end a chat well.",
+  "Week 1, warm-up reps (Days 1 to 7), one short rep a day, mostly under 5 minutes, all low stakes and with anyone, not dating: Day 1 say hi to a cashier or barista and ask one real question. Day 2 compliment something someone chose. Day 3 ask for a recommendation. Day 4 eye contact and a nod, five times. Day 5 say one thing about a shared moment, like a line. Day 6 text an old friend or meet the organizer of a group. Day 7 go get a small no on purpose. Plus a short morning warm-up walk where he says hi to people he passes. The rule for the week: say the plain, obvious thing about the moment. No clever line needed.",
+  "Week 2, stay-in reps (Days 8 to 14): keep a chat going 2 to 5 minutes. A simple loop: notice something, ask an open question, then follow up on their answer. Share a little about yourself, then ask. Get their name and use it. Speak slow and listen to understand, not to plan your next line.",
+  "What to do when your mind goes blank, in order (on a small card he keeps on his phone): repeat their last words as a question, go back to something they said earlier, ask them to say it again, ask about the moment, or end it kindly with their name.",
+  "Week 3, real-life reps (Days 15 to 21): friendly talks with women he already sees every week (his weekly group, work, church, the gym before or after a workout), with no agenda. Learn her name, a 3-minute chat, bring back something she told him. Seeing the same people again matters more than a perfect first impression.",
+  "Week 4, ask reps (Days 22 to 28): plan and practice one ask, then make it in one clear, kind sentence: what you like about talking to her, a simple plan, a specific day. \"I always have fun talking with you. Let's grab coffee Saturday.\" Then accept whatever she says.",
+  "After a no: hear it the first time, leave kindly (\"No worries, have a good one\"), then a 10-minute reset the same day (move your body, log the rep, write two lines, talk to one person). A no is her answer to one question, on one day.",
+  "When she says yes: a simple first date, how to talk on it, and what to say if she asks \"Have you dated much?\" (don't lead with it, be honest and brief if it comes up).",
+  "The 30-Day Rep Tracker: he logs what he did, not how it went, and sees progress in real numbers.",
+  "30 Rep Cards: today's rep on his phone.",
+  "The AI Practice Partner: practice saying hi, keeping a chat going, and the ask, out loud, before doing it for real. For practice, never for scripts.",
+];
+
+// The only research the AI may cite. At most ONE per result, worded with its source named.
+export const RESEARCH = [
+  "In one big dating app survey (Hinge, 2024), 44% of Gen Z users said they have little or no dating experience.",
+  "One study (Huang and others, 2017) found that people who ask more follow-up questions are liked more.",
+  "A 2023 survey (American Enterprise Institute) found about half of young women in relationships were friends with their partner first.",
 ];
 
 export const OFFER = {

@@ -1,4 +1,6 @@
-# The Late Start Quiz: Every Word He Sees (draft v1, Oct 19, 2026)
+# The Late Start Quiz: Every Word He Sees (draft v2, Oct 20, 2026)
+
+> v2 changes: tap 4 options reworded; new type names (hidden pattern, same Kajabi tags); longer loading copy; results page rebuilt (deeper read, his "why," steps in his places, "first week" bridge); new "took longer than usual" error.
 
 In order, screen by screen. The code uses these exact words (`components/Quiz.tsx` and `lib/content.ts`). Change them here, then the Builder copies the change into the code.
 
@@ -37,7 +39,9 @@ I've never been on a date. · I've talked to girls, but never asked one out. · 
 None · 1 or 2 · 3 to 5 · More than 5
 
 **4. What do you want most right now?**
-Stop freezing up · Meet more people · Feel more confident · Ask a girl out · Make more friends
+Stay calm when it's time to talk · Meet more people · Feel sure of myself · Ask a girl out · Make more friends
+
+(v2: no option repeats a type name word for word. Option ids are unchanged.)
 
 ---
 
@@ -96,15 +100,17 @@ Privacy box:
 
 ## 5. Loading
 
-Three pulsing dots. One line at a time, a new one every 3.5 seconds (stops on the last):
+Three pulsing dots. One line at a time, a new one every 5 seconds (stops on the last):
 
 1. Reading what you wrote...
-2. Picking out what matters most...
-3. Finding the steps that fit your week...
-4. Writing it in plain words...
-5. Almost there. Thanks for being honest.
+2. Looking for the thread that ties it together...
+3. Connecting where you've been to where you want to go...
+4. Picking 3 steps that fit your week...
+5. Mapping what your first week could look like...
+6. Writing it in plain words...
+7. Almost there. Thanks for being honest.
 
-Small: This takes about 10 to 25 seconds. Please keep this page open.
+Small: We're writing a full, personal read, so this takes about 20 to 45 seconds. Please keep this page open.
 
 (No percent, no fake progress bar.)
 
@@ -112,28 +118,39 @@ Small: This takes about 10 to 25 seconds. Please keep this page open.
 
 ## 6. Results page (template)
 
-**Hey [first name]. Here's what I heard.** (the page fills the name, not the AI)
-Small: Written by AI from your answers, using the methods in Gage's 30-day plan.
+**Hey [first name]. Here's what I see.** (the page fills the name, not the AI)
+Small: Written by AI from your answers, using the methods in Gage's 30-day plan. About a 5-minute read.
 
 If his answers were thin (AI flag `low_info`), a yellow note:
 > Your answers were pretty short, so this is a rough read. Retake with a little more detail and it gets a lot more personal.
 
-If the AI failed twice and we used the backup result:
+If the AI couldn't finish and we used the backup result:
 > We couldn't write your full results this time, so this one is based on your quick taps. You can retake the quiz any time for a fuller read.
 
-| Section | Heading on the page | How it's filled |
+The AI writes about 800 to 1,000 words in total. Full example: SAMPLE_RESULT_V2.md.
+
+| # | Heading on the page | How it's filled |
 |---|---|---|
-| Type card (navy) | YOUR TYPE / [The Freezer, The No-Places Guy, Burned Before, or Never Started] | Name is fixed by the page. One line why (AI, `type_reason`). |
-| 1 | Where you are | AI, 2 to 3 sentences, with 1 or 2 short exact quotes from his answers. |
-| 2 | Where you want to be | AI, 2 sentences, from questions 6 and 7. |
-| 3 | What's holding you back | AI, 2 or 3 items (short title + 1 to 2 sentences), each tied to a real workbook idea. |
-| 4 | Your 3 steps this week | AI picks 3 reps ONLY from the fixed list below and writes one "how" line fitted to his week. The page shows OUR rep title and "Done when:" line. Under the steps: "A step counts when you do it, not when it goes well." |
-| 5 | If nothing changes | AI, 2 to 3 calm sentences. No fear tactics. |
-| 6 | How the 30-day plan fits what you said | AI: one bridge line + 3 bullets ("You said ___. [real part of the plan] ___."). Then the fixed offer box below. |
+| Type card (navy) | YOUR PATTERN / [type name] / [fixed tagline] | Name and tagline fixed by the page (below). Then 1 to 2 sentences on how it shows up in HIS life (AI, `type_reason`). |
+| 1 | What's really going on | AI, 3 or 4 short paragraphs: where it started (his past), how it shows up now (the moment he described), what it protects him from and what it costs, why it's learnable. Uses his words as evidence (max 4 short quotes), then says what they mean. |
+| 2 | What's actually true | AI, 2 or 3 items (short title + 2 to 4 sentences). Kindly corrects the story he tells himself (question 9). At most one stat, only from the approved list, source named. |
+| 3 | Why this matters to you | AI, one paragraph on his deepest reason (question 7). The emotional center. Shown larger, in a soft box. |
+| 4 | The honest cost of waiting | AI, one calm paragraph. Uses his own future picture. No fear tactics, no fake numbers. |
+| 5 | Your 3 steps this week | Small line: "Easiest first. Each one makes the next one easier." AI picks 3 reps ONLY from the fixed list below, and writes a short headline, "When:" (his day and place) and exactly what to say or do. The page adds OUR "Done when:" line. Under the steps: "A step counts when you do it, not when it goes well." |
+| 6 | What your first week could look like | AI, two paragraphs: what HIS first week in the plan looks like (Day 0, then Week 1 reps in his places), and why a plan fits him given what he already tried. Only real plan parts. Then the fixed offer box. |
+
+Fixed type names and taglines (Kajabi tags unchanged):
+
+| Internal id / Kajabi tag | Name on page | Tagline (fixed) |
+|---|---|---|
+| freezer / Quiz - Freezer | The Over-Scripter | Your brain writes the whole talk first, so nothing can go wrong. By the time the script is done, the moment is gone. |
+| no_places / Quiz - No-Places Guy | The Closed Loop | Your week runs on the same few places and the same few people. You're not the problem. There's just no door for anyone new. |
+| burned_before / Quiz - Burned Before | The Old Rule | One moment that stung wrote a rule: don't try, and it can't happen again. The moment is over. The rule is still running. |
+| never_started / Quiz - Never Started | The Someday Guy | You're waiting to feel ready first. But ready shows up after the first steps, not before them. |
 
 Fixed offer box (the AI never writes price, guarantee or link):
 > **The Late Start: The 30-Day Plan for Guys Who've Never Dated**
-> **$27, one payment.** A 51-page workbook with one small rep a day, plus the 30-Day Rep Tracker, 30 Rep Cards, the When You Freeze card and the AI Practice Partner.
+> **$27, one payment.** A 51-page workbook with one small rep a day for 30 days, plus a rep tracker, a rep card for each day, a pocket card for when your mind goes blank, and an AI Practice Partner to practice with first.
 > 90 days to decide. If it's not worth it, email the word "refund" to support@confidenceofayes.com and get your money back.
 > No plan can honestly promise you a date or a girlfriend. This one gives you a clear step for every day.
 > Button: **See the 30-day plan ($27)** → https://start.confidenceofayes.com/the-late-start
@@ -147,23 +164,25 @@ Bottom line: Not therapy. If you feel hopeless or think about hurting yourself, 
 
 ### The fixed rep list (the only steps the AI can give)
 
-| Rep | Done when |
-|---|---|
-| Warm up your social battery | You said hi to a few people on your walk. |
-| Hi + one question | You asked and listened. |
-| Notice something they chose | You said it out loud. |
-| Ask for a recommendation | You asked and said thanks. |
-| Eye contact + nod, five times | You hit five. |
-| The waiting-room chat | You said it, whatever they said back. |
-| Text one old friend | The message is sent. |
-| Go get a "no" | You asked. Bonus if you heard "no." Notice how fast the sting fades. |
-| Pick your one weekly thing | You picked it and signed up or showed up. |
-| Find the organizer | You said it and learned one name. |
-| Learn one name and use it | You learned a name and used it. |
-| Practice the Parrot | You used it once. |
-| Sort your week: green, yellow, red | You sorted every place you'll be this week. |
+The AI may only change where, when, who, and the simple words to say. Titles are plain English now (no "Parrot," no "green, yellow, red").
 
-All are from the workbook: Week 1 Days 1 to 7, Chapter 2 (weekly thing, old friend, organizer), Chapter 3 (green, yellow, red), Chapter 5 and the When You Freeze card (name, Parrot), and the morning social battery.
+| Rep (plain title) | Done when | From the workbook |
+|---|---|---|
+| Warm up on the way | You said hi to a few people on the way. | Week 1 morning social battery |
+| Eye contact and a nod, five times | You hit five. | Day 4 |
+| Say hi and ask one real question | You asked and listened. | Day 1 |
+| Say one thing about the moment you share | You said it, whatever they said back. | Day 5 + "say the obvious thing" |
+| Compliment something they chose | You said it out loud. | Day 2 |
+| Ask what they'd recommend | You asked and said thanks. | Day 3 |
+| Go get a small no on purpose | You asked. Bonus if you heard "no." Notice how fast the sting fades. | Day 7 |
+| Say hi to someone you see every week (NEW) | You said hi and one thing, then let it end well. | Day 15 + gym row of the Places Map + leave-well rule |
+| Learn one name and use it | You learned a name and used it. | Week 2 |
+| Bring back something they told you (NEW) | You made one callback. | Day 12 |
+| Repeat their last words as a question | You used it once in a real chat. | When You Freeze card. Only for guys who can start chats but run dry. |
+| Text one old friend | The message is sent. | Build Your Circle |
+| Pick one thing you go to every week | You picked it and signed up or showed up. | Build Your Circle |
+| Talk to the person running the group | You said it and learned one name. | Build Your Circle |
+| Sort your week by where talking is normal | You sorted every place you'll be this week. | Respect First |
 
 ---
 
@@ -228,6 +247,7 @@ Each has the buttons **Try again** (when it can help) and **Back to my answers**
 | When | Heading | Text | Try again? |
 |---|---|---|---|
 | Too many tries this hour | Let's take a short break | A lot of quizzes came from your internet connection this hour. Please try again in an hour. | No |
+| AI took too long (v2) | That took longer than usual | Writing your results ran out of time on our end. It's not you. Your answers are still here. Tap Try again. | Yes |
 | AI or daily cap busy | We're very busy right now | Too many people are taking the quiz at once. Your answers are still here. Please try again in a few minutes. | Yes |
 | No internet | Looks like you lost connection | Your answers are still here on this screen. Check your signal, then tap Try again. | Yes |
 | Answer too long | That's a lot of words | One of your answers is too long for us to read. Tap Back to my answers and trim it a little. | No |
@@ -250,7 +270,7 @@ Privacy Policy (https://start.confidenceofayes.com/privacy-policy) · Terms (/te
 
 For [first name]
 My quiz results (The Confidence of a Yes)
-Your type, Where you are, Where you want to be, What's holding you back, Your 3 steps this week (with Done when), If nothing changes, and the 30-day plan link.
+Your pattern (name, tagline, why), What's really going on, What's actually true, Why this matters to you, The honest cost of waiting, Your 3 steps this week (with When and Done when), What your first week could look like, and the 30-day plan link.
 
 ---
 

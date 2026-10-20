@@ -115,12 +115,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const ai = await writeResults(taps, answers);
+    const ai = await writeResults(taps, answers, started);
     return save(toQuizResult(ai));
   } catch (e) {
     const code = e instanceof AiError ? e.code : "ai_failed";
     if (code === "bad_json") return save(fallbackResult(taps.want, taps.people));
     if (code === "ai_busy") return fail(503, "busy");
+    if (code === "ai_timeout") return fail(504, "slow");
     if (code === "no_api_key") console.error("quiz_no_api_key");
     return fail(502, "ai_failed");
   }
