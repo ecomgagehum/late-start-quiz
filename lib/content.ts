@@ -116,7 +116,7 @@ export const QUESTIONS: { id: string; text: string; helper: string }[] = [
   },
   {
     id: "q10",
-    text: "What's one small step you'd be willing to take this week to get more comfortable talking to women? What might stop you?",
+    text: "Finish this sentence: \"One small thing I could do this week to talk to more people is...\"",
     helper: "Small is good. Like saying hi to the barista you see every week, or asking a coworker how their weekend was.",
   },
 ];

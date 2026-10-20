@@ -60,7 +60,7 @@ The voice tip shows once, on question 1: **Tip: tap the mic on your keyboard and
 | 7 | Is getting to that life important to you? If so, why? | Give the real reason, not just the first one that pops up. (Skipped the last question? Think of the life you wish you had.) |
 | 8 | What have you tried so far to get better at talking to women or dating? How did it go? | Dating apps, videos, books, asking friends, going out more. It's fine if the answer is "nothing yet." |
 | 9 | What do you tell yourself is the reason you're not where you want to be with women yet? | The thought that shows up when you're by yourself. |
-| 10 | What's one small step you'd be willing to take this week to get more comfortable talking to women? What might stop you? | Small is good. Like saying hi to the barista you see every week, or asking a coworker how their weekend was. |
+| 10 | Finish this sentence: "One small thing I could do this week to talk to more people is..." | Small is good. Like saying hi to the barista you see every week, or asking a coworker how their weekend was. |
 
 Each question has its own job: Q1 who he is and what he's good at (strengths, things to talk about), Q2 where he goes and who he sees, Q3 the real moment, Q4 old hurts, Q5 the cost, Q6 the future picture, Q7 his real reason, Q8 what he tried, Q9 the story he tells himself, Q10 one small yes.
 
