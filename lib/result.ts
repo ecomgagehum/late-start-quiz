@@ -16,7 +16,7 @@ export type AiResult = {
 };
 
 // A belief card as the page shows it. belief/research/source are fixed copy; personalLine is AI (may be empty).
-export type ResultBelief = { id: BeliefId; belief: string; research: string; source: string; personalLine: string };
+export type ResultBelief = { id: BeliefId; belief: string; research: string; takeaway: string; source: string; url: string; personalLine: string };
 
 export type ResultStep = { repId: string; headline: string; whenWhere: string; whatToDo: string; doneWhen: string };
 
@@ -130,7 +130,7 @@ export function beliefsFor(cards: AiResult["belief_cards"]): ResultBelief[] {
 
 function pickFixed(id: BeliefId) {
   const b = BELIEFS[id];
-  return { belief: b.belief, research: b.research, source: b.source };
+  return { belief: b.belief, research: b.research, takeaway: b.takeaway, source: b.source, url: b.url };
 }
 
 export function validateAiResult(raw: unknown): AiResult | null {

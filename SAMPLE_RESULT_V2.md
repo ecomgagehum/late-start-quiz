@@ -111,18 +111,20 @@ This is the one you named yourself. Don't plan a speech. If she's resting and ha
 
 ### What you've been telling yourself vs. what the research says
 
-*These facts are fixed. The AI didn't write them, and each one names where it came from.* (fixed)
+*These facts are fixed. The AI didn't write them. Each one names the study it came from, with a link so you can check it yourself.* (fixed)
 
 > *"I'll say something stupid. I need the right line."*  
 > **WHAT THE RESEARCH SAYS** (fixed)  
-> In studies of real conversations and speed dates, people who asked more follow-up questions (questions about what the other person just said) were liked more. Speed daters who did it got more yeses for a second date. No line needed, just interest.  
-> <small>Huang and others, Harvard, 2017</small>  
+> A 2017 Harvard study (Huang and others, Journal of Personality and Social Psychology) found that people who asked more follow-up questions, meaning questions about what the other person just said, were liked more. In the speed-dating part of the study, people who asked more follow-up questions got more yeses for a second date.  
+> **You don't need a line. You need to be interested in her answer.** (fixed)  
+> <small>Source: Huang, Yeomans, Brooks, Minson and Gino, "It Doesn't Hurt to Ask: Question-Asking Increases Liking," Journal of Personality and Social Psychology, 2017. [See the study](https://dash.harvard.edu/handle/1/42704282)</small>  
 > **You don't need the script you write at the water fountain. Ask about her workout, then really listen to what she says.** (AI line)
 
 > *"I'm not good-looking enough."*  
 > **WHAT THE RESEARCH SAYS** (fixed)  
-> Looks do matter some, for everyone. But in speed-dating research, the "must-haves" people listed ahead of time did a poor job of guessing who they actually liked once they met in person. In other studies, women rated kind men as more attractive partners for the long run, and kindness helped most for men who weren't the best-looking.  
-> <small>Eastwick and Finkel, 2008; Farrelly and others, 2016</small>  
+> Looks do matter some, for everyone. But a speed-dating study (Eastwick and Finkel, 2008) found that the traits people said they wanted ahead of time did a poor job of predicting who they actually liked once they met in person. And in a 2016 study (Farrelly and others), women rated kind, generous men as more attractive for a long-term relationship, and kindness gave the biggest boost to men who weren't the best-looking.  
+> **Looks open a door a little. How you treat people does a lot more once you're talking.** (fixed)  
+> <small>Source: Eastwick and Finkel, Journal of Personality and Social Psychology, 2008; Farrelly, Clemson and Guthrie, "Are Women's Mate Preferences for Altruism Also Influenced by Physical Attractiveness?" Evolutionary Psychology, 2016. [See the study](https://eprints.worc.ac.uk/4109)</small>  
 > **You put looks on your list. Your crew made you team lead. Being kind and steady counts here too, maybe more than you think.** (AI line)
 
 *What you feel isn't always what's true. And confidence is something you can learn.* (fixed)

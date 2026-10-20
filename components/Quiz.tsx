@@ -529,7 +529,7 @@ function resultsText(r: Extract<QuizResult, { kind: "result" }>, firstName: stri
           BELIEF_SECTION.title,
           ...r.beliefs.flatMap((b) => [
             `"${b.belief}"`,
-            `What the research says: ${b.research} (Source: ${b.source})`,
+            `What the research says: ${b.research} ${b.takeaway} (Source: ${b.source}, ${b.url})`,
             ...(b.personalLine ? [b.personalLine] : []),
             ``,
           ]),
@@ -627,7 +627,11 @@ function Results({
                 <p className="belief">&ldquo;{b.belief}&rdquo;</p>
                 <p className="label">What the research says</p>
                 <p className="research">{b.research}</p>
-                <p className="source">{b.source}</p>
+                <p className="research"><strong>{b.takeaway}</strong></p>
+                <p className="source">
+                  Source: {b.source}.{" "}
+                  <a href={b.url} target="_blank" rel="noopener noreferrer">See the study</a>
+                </p>
                 {b.personalLine && <p className="personal">{b.personalLine}</p>}
               </li>
             ))}
