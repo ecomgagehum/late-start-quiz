@@ -111,24 +111,26 @@ How to build the 3 steps:
 # PLAN PARTS (the only parts of The Late Start you may describe)
 ${planList}
 
-# What each field is (target total: about 800 to 1,000 words across all fields, not counting the fixed belief cards)
+# What each field is (v3, Oct 26, 2026: SHORT and SCANNABLE)
+The page is read on a phone. Gage's rule: as much value as possible in as few words as possible. Every bullet is one clear idea. No filler, no warm-up sentences, no repeating yourself. Target total: about 350 to 450 words across all fields, not counting the fixed belief cards. Shorter is better if nothing is lost.
 - flags: see Safety flags below.
 - type: one of the 4 ids.
-- type_reason: 1 or 2 sentences (25 to 50 words). How this hidden pattern shows up in HIS life. Not a repeat of his tap, and not a reword of the fixed line the page already shows above it (add his evidence instead).
-- whats_going_on: 3 or 4 short paragraphs (each 3 to 6 sentences, about 250 to 330 words total). This is "here's what's really going on." Paragraph 1: where it started (his past, if he shared one) and the rule or habit it taught him. Paragraph 2: how that shows up now, in the exact moment he described (question 3) and his week. Paragraph 3: what the pattern protects him from, and what it costs him, connected to how he feels (question 5) and the story he tells himself (question 9). Optional paragraph 4: why it's learnable (it's a habit and missing practice, not something wrong with him). If he skipped the past question, start with the present and don't invent a past.
-- whats_true: 2 items (3 only if the third says something new), each { title (2 to 6 words), text (2 to 4 sentences) }. Kindly correct the parts of his story (question 9) that the belief cards you picked DON'T cover, using his own evidence (his life, his wins, what he told you). No numbers, studies or sources here. For example: "Not a natural" -> nobody is; it's reps. "Something's wrong with me" -> you're missing practice, not something inside you. "That no was who I am" -> it was one person, one moment.
-- your_why: 1 paragraph (60 to 110 words). His deepest reason from question 7 (and the life from question 6), named plainly and with respect. This is the emotional center. Tell him it is a good reason, and that it's worth being a little uncomfortable for. If he skipped question 7 or gave no real reason, use only the life he described in question 6 (or his quick taps), say plainly that he didn't name his reason yet, and invite him to name it. Never make up a reason for him.
-- cost_of_waiting: 1 paragraph (50 to 90 words). The honest, kind cost of changing nothing, using his own future picture. No fear tactics.
-- steps: exactly 3 items, each:
+- type_reason: ONE sentence (15 to 30 words). How this hidden pattern shows up in HIS life. Not a repeat of his tap or the fixed line above it.
+- whats_going_on: 3 or 4 bullets, each ONE or TWO short sentences (10 to 25 words). Bullet 1: where it started (his past, if he shared one) and the rule it taught him. Bullet 2: how it shows up now, in the exact moment he described. Bullet 3: what it protects him from and what it costs him. Optional bullet 4: why it's learnable. If he skipped the past question, don't invent a past.
+- plan_fixes: exactly 3 items { his_issue, plan_fix }. This weaves the 30-day plan into his read, so he sees how it fixes HIS problem. his_issue: his specific problem in his words or close to them (4 to 12 words, for example "Your mind goes blank at the water fountain"). plan_fix: the exact part of the plan that fixes it, from PLAN PARTS only, in plain words (10 to 22 words, for example "Week 2 gives you a simple loop to keep a chat going, plus a card for when you blank"). One issue per item, three different plan parts. No price, no hype, no promises.
+- whats_true: exactly 2 items { title (2 to 6 words), text (ONE or TWO sentences, 10 to 25 words) }. Kindly correct the parts of his story the belief cards don't cover, using his own evidence.
+- your_why: 1 or 2 sentences (15 to 40 words). His deepest reason from question 7, named plainly, and that it's a good reason. If he gave no reason, use the life from question 6 and say he can name his reason. Never invent one.
+- cost_of_waiting: 1 or 2 sentences (15 to 35 words). Honest, kind, calm. No fear tactics.
+- steps: exactly 3 items:
   - rep_id: from the REP LIST.
-  - headline: 3 to 9 words, plain, specific to him (for example "Say hi to the barista by work").
-  - when_where: a short phrase: the day or time and the place in his week.
-  - what_to_do: 2 to 4 sentences. Exactly what to say or do, with a simple example sentence in quotes, and how to end it kindly. Plain words.
-- belief_cards: 0 to 2 items, each { id (from the BELIEF CARD LIST), personal_line }. See "Belief cards" above.
-- first_week: 1 paragraph (80 to 130 words). What HIS first week in the 30-day plan would look like, given his answers. Use only PLAN PARTS. Start with Day 0 and the small daily reps of Week 1, in his places (his coffee spot, his job, his gym, his church). Show how it climbs, one small step at a time, toward the thing he named in question 10 and later toward the life he wants. No promises.
-- why_a_plan: 1 paragraph (50 to 90 words). Why a step-by-step plan fits a guy like him, tied to what he already tried (question 8). Be fair to what he tried; don't trash his friends. For example: "just go talk to her" skips the steps; videos that felt sleazy aren't who he is; an app with no practice left him with nothing to say. A plan gives him one small rep a day, so he's never guessing what to do next. No hype.
+  - headline: 3 to 9 words, specific to him.
+  - when_where: a short phrase (day or time and place in his week).
+  - what_to_do: 1 or 2 sentences (15 to 35 words) with one example sentence in quotes and the kind way out.
+- belief_cards: 0 to 2 items, each { id, personal_line }. See "Belief cards" above.
+- first_week: 2 or 3 sentences (30 to 55 words). His first week in the plan, in his places, from PLAN PARTS only, climbing toward what he named in question 10.
+- why_a_plan: 1 or 2 sentences (15 to 35 words). Why a step-by-step plan fits him, tied to what he already tried (question 8). Fair, no hype.
 
-If low_info is true: keep it short and honest (whats_going_on 1 or 2 short paragraphs, everything else brief). Don't pretend you know more than he told you.
+If low_info is true: keep it short and honest (whats_going_on 1 or 2 bullets, everything else brief). Don't pretend you know more than he told you.
 
 # Safety flags (check these first)
 - crisis: true if anything suggests he may hurt or kill himself, wants to die, feels there's no reason to live, self-harm, or he is in danger right now. When in doubt, set true. Dark jokes about dying count. Common idioms alone do NOT count: "this is killing me," "I'd die of embarrassment," "I wanted to die when she looked at me," "social suicide," "killing myself at the gym." Look at the whole answer: if an idiom sits next to real hopelessness, set true. If crisis is true, still call the tool, set crisis true, and fill every other text field with "n/a" and use any valid ids. The page shows a support screen instead.
@@ -180,7 +182,7 @@ export const RESULT_TOOL = {
     additionalProperties: false,
     required: [
       "flags", "type", "type_reason", "whats_going_on", "whats_true", "your_why",
-      "cost_of_waiting", "steps", "belief_cards", "first_week", "why_a_plan",
+      "cost_of_waiting", "steps", "belief_cards", "first_week", "why_a_plan", "plan_fixes",
     ],
     properties: {
       flags: {
@@ -196,7 +198,17 @@ export const RESULT_TOOL = {
       },
       type: { type: "string", enum: Object.keys(TYPES) },
       type_reason: str,
-      whats_going_on: { type: "array", items: str, description: "3 or 4 short paragraphs: past, present, protection and cost, learnable." },
+      whats_going_on: { type: "array", items: str, description: "3 or 4 short bullets (10 to 25 words each): past, present, protection and cost, learnable." },
+      plan_fixes: {
+        type: "array",
+        description: "Exactly 3: his specific issue and the part of the 30-day plan that fixes it.",
+        items: {
+          type: "object",
+          additionalProperties: false,
+          required: ["his_issue", "plan_fix"],
+          properties: { his_issue: str, plan_fix: str },
+        },
+      },
       whats_true: {
         type: "array",
         items: {

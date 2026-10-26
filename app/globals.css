@@ -220,3 +220,11 @@ footer .links a { margin-right: 14px; }
   .wrap { padding-top: 32px; }
   h1 { font-size: 38px; }
 }
+
+/* v3 results (Oct 26, 2026): scannable bullets + plan fixes */
+.bullets { padding-left: 20px; margin: 6px 0 0; }
+.bullets li { margin-bottom: 10px; line-height: 1.5; }
+.fixes { list-style: none; padding: 0; margin: 6px 0 14px; }
+.fixes li { background: var(--paper); border-left: 4px solid var(--gold); border-radius: 0 10px 10px 0; padding: 10px 14px; margin-bottom: 10px; }
+.fixes .issue { margin: 0 0 4px; font-weight: 600; color: var(--navy); }
+.fixes .fix { margin: 0; }

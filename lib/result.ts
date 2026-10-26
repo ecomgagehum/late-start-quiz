@@ -12,6 +12,7 @@ export type AiResult = {
   belief_cards: { id: BeliefId; personal_line: string }[];
   first_week: string;
   why_a_plan: string;
+  plan_fixes: { his_issue: string; plan_fix: string }[];
   flags: { crisis: boolean; under18: boolean; harm_others: boolean; low_info: boolean };
 };
 
@@ -41,6 +42,7 @@ export type QuizResult =
       beliefs: ResultBelief[];
       firstWeek: string;
       whyAPlan: string;
+      planFixes: { issue: string; fix: string }[];
     };
 
 const TYPE_IDS = Object.keys(TYPES) as TypeId[];
@@ -147,19 +149,20 @@ export function validateAiResult(raw: unknown): AiResult | null {
   if (flags.crisis || flags.under18 || flags.harm_others) {
     return {
       type: "never_started", type_reason: "", whats_going_on: [], whats_true: [], your_why: "",
-      cost_of_waiting: "", steps: [], belief_cards: [], first_week: "", why_a_plan: "", flags,
+      cost_of_waiting: "", steps: [], belief_cards: [], first_week: "", why_a_plan: "", plan_fixes: [], flags,
     };
   }
   const type = TYPE_IDS.includes(r.type as TypeId) ? (r.type as TypeId) : null;
-  const type_reason = str(r.type_reason, 450);
-  const your_why = str(r.your_why, 900);
-  const cost_of_waiting = str(r.cost_of_waiting, 750);
-  const first_week = str(r.first_week, 1100);
-  const why_a_plan = str(r.why_a_plan, 750);
+  // v3 (Oct 26, 2026): short and scannable. Caps are a backstop; the prompt asks for much less.
+  const type_reason = str(r.type_reason, 260);
+  const your_why = str(r.your_why, 320);
+  const cost_of_waiting = str(r.cost_of_waiting, 300);
+  const first_week = str(r.first_week, 420);
+  const why_a_plan = str(r.why_a_plan, 300);
   if (!type || !type_reason || !your_why || !cost_of_waiting || !first_week || !why_a_plan) return null;
 
   const whats_going_on = Array.isArray(r.whats_going_on)
-    ? r.whats_going_on.map((p) => str(p, 900)).filter((x): x is string => !!x).slice(0, 4)
+    ? r.whats_going_on.map((p) => str(p, 220)).filter((x): x is string => !!x).slice(0, 4)
     : [];
   if (whats_going_on.length < (flags.low_info ? 1 : 2)) return null;
 
@@ -168,11 +171,11 @@ export function validateAiResult(raw: unknown): AiResult | null {
         .map((h) => {
           const o = (h || {}) as Record<string, unknown>;
           const title = str(o.title, 80);
-          const text = str(o.text, 550);
+          const text = str(o.text, 220);
           return title && text ? { title, text } : null;
         })
         .filter((x): x is { title: string; text: string } => !!x)
-        .slice(0, 3)
+        .slice(0, 2)
     : [];
   if (whats_true.length < (flags.low_info ? 1 : 2)) return null;
 
@@ -184,7 +187,7 @@ export function validateAiResult(raw: unknown): AiResult | null {
           const rep_id = typeof o.rep_id === "string" ? o.rep_id : "";
           const headline = str(o.headline, 90);
           const when_where = str(o.when_where, 160);
-          const what_to_do = str(o.what_to_do, 650);
+          const what_to_do = str(o.what_to_do, 300);
           if (!REP_IDS.includes(rep_id) || seen.has(rep_id) || !headline || !what_to_do) return null;
           seen.add(rep_id);
           return { rep_id, headline, when_where: when_where || "", what_to_do };
@@ -194,10 +197,24 @@ export function validateAiResult(raw: unknown): AiResult | null {
     : [];
   if (steps.length !== 3) return null;
 
+  // v3: how the plan fixes HIS issues (woven-in sell). Need at least 2 good ones (1 if low info).
+  const plan_fixes = Array.isArray(r.plan_fixes)
+    ? r.plan_fixes
+        .map((x) => {
+          const o = (x || {}) as Record<string, unknown>;
+          const his_issue = str(o.his_issue, 120);
+          const plan_fix = str(o.plan_fix, 220);
+          return his_issue && plan_fix ? { his_issue, plan_fix } : null;
+        })
+        .filter((x): x is { his_issue: string; plan_fix: string } => !!x)
+        .slice(0, 3)
+    : [];
+  if (plan_fixes.length < (flags.low_info ? 1 : 2)) return null;
+
   // Belief cards are optional: a missing or bad list never fails the result, it just shows fewer cards.
   const belief_cards = validBeliefCards(r.belief_cards, flags.low_info ? 1 : 2);
 
-  return { type, type_reason, whats_going_on, whats_true, your_why, cost_of_waiting, steps, belief_cards, first_week, why_a_plan, flags };
+  return { type, type_reason, whats_going_on, whats_true, your_why, cost_of_waiting, steps, belief_cards, first_week, why_a_plan, plan_fixes, flags };
 }
 
 export function toQuizResult(ai: AiResult): QuizResult {
@@ -225,6 +242,7 @@ export function toQuizResult(ai: AiResult): QuizResult {
     beliefs: beliefsFor(ai.belief_cards),
     firstWeek: ai.first_week,
     whyAPlan: ai.why_a_plan,
+    planFixes: ai.plan_fixes.map((x) => ({ issue: x.his_issue, fix: x.plan_fix })),
   };
 }
 
@@ -262,8 +280,14 @@ export function fallbackResult(want: string | undefined, people: string | undefi
     typeTagline: TYPES[type].tagline,
     typeReason: reasons[type],
     whatsGoingOn: [
-      "We couldn't write your full read this time, so this one is based on your quick taps only.",
-      "Here's what's true for almost every guy in your spot. Nobody handed you a step 1. \"Just put yourself out there\" isn't a step. That's not a flaw in you. It's a missing plan.",
+      "This read is based on your quick taps only.",
+      "Nobody handed you a step 1. \"Just put yourself out there\" isn't a step.",
+      "That's not a flaw in you. It's a missing plan.",
+    ],
+    planFixes: [
+      { issue: "No clear step 1", fix: "Day 1 is one small rep: say hi to a cashier or barista and ask one real question." },
+      { issue: "Not sure what to say", fix: "Week 2 gives you a simple loop to keep a chat going, plus a card for when you blank." },
+      { issue: "Scared of a no", fix: "The plan shows you how to hear a no, leave kindly, and reset the same day." },
     ],
     whatsTrue: [
       { title: "You don't need a perfect line", text: "A plain, honest question about the moment you're both in is enough. Then listen." },
@@ -280,7 +304,7 @@ export function fallbackResult(want: string | undefined, people: string | undefi
     })),
     beliefs: beliefsFor([{ id: beliefByType[type], personal_line: "" }]),
     firstWeek:
-      "In the 30-day plan, Day 0 is about an hour of short reads and fill-in pages. Then Week 1 is one small rep a day, most under 5 minutes, with anyone: say hi and ask a barista one question, say one thing about a line you're in, text an old friend. Each week climbs one small step, until talking feels normal.",
+      "Day 0 is about an hour of short reads. Then Week 1 is one small rep a day, most under 5 minutes, with anyone. Each week climbs one small step.",
     whyAPlan: "A plan means you never have to guess what to do next. One small rep a day, each a little bigger than the last.",
   };
 }

@@ -245,7 +245,7 @@ export default function Quiz() {
           <li>Free. For guys 18 and up.</li>
         </ul>
         <button className="btn" onClick={() => go({ s: "tap", i: 0 })}>Start</button>
-        <p className="small muted" style={{ marginTop: 14 }}>Your results are written by AI, using the methods in Gage&apos;s 30-day plan. Not therapy.</p>
+        <p className="small muted" style={{ marginTop: 14 }}>Your results use the methods in Gage&apos;s 30-day plan. Not therapy.</p>
       </Shell>
     );
   }
@@ -511,7 +511,11 @@ function resultsText(r: Extract<QuizResult, { kind: "result" }>, firstName: stri
     r.typeReason,
     ``,
     `What's really going on`,
-    ...r.whatsGoingOn.flatMap((p) => [p, ``]),
+    ...r.whatsGoingOn.map((p) => `- ${p}`),
+    ``,
+    `How the 30-day plan fixes this`,
+    ...r.planFixes.map((x) => `- ${x.issue}. The plan: ${x.fix}`),
+    ``,
     `What's actually true`,
     ...r.whatsTrue.map((h) => `- ${h.title}: ${h.text}`),
     ``,
@@ -537,7 +541,7 @@ function resultsText(r: Extract<QuizResult, { kind: "result" }>, firstName: stri
           ``,
         ]
       : []),
-    `What your first week could look like`,
+    `Your first week in the plan`,
     r.firstWeek,
     ``,
     r.whyAPlan,
@@ -566,7 +570,7 @@ function Results({
   return (
     <article>
       <h1 ref={headingRef} tabIndex={-1}>Hey {firstName || "there"}. Here&apos;s what I see.</h1>
-      <p className="byline">Written by AI from your answers, using the methods in Gage&apos;s 30-day plan. About a 5-minute read.</p>
+      <p className="byline">About a 2-minute read.</p>
       {r.fallback && <p className="note">We couldn&apos;t write your full results this time, so this one is based on your quick taps. You can retake the quiz any time for a fuller read.</p>}
       {r.lowInfo && !r.fallback && <p className="note">Your answers were pretty short, so this is a rough read. Retake with a little more detail and it gets a lot more personal.</p>}
 
@@ -579,8 +583,25 @@ function Results({
 
       <section className="section">
         <h3>What&apos;s really going on</h3>
-        {r.whatsGoingOn.map((p, i) => <p key={i}>{p}</p>)}
+        <ul className="bullets">
+          {r.whatsGoingOn.map((p, i) => <li key={i}>{p}</li>)}
+        </ul>
       </section>
+
+      {r.planFixes.length > 0 && (
+        <section className="section">
+          <h3>How the 30-day plan fixes this</h3>
+          <ul className="fixes">
+            {r.planFixes.map((x, i) => (
+              <li key={i}>
+                <p className="issue">{x.issue}</p>
+                <p className="fix"><strong>The plan:</strong> {x.fix}</p>
+              </li>
+            ))}
+          </ul>
+          <a className="btn gold" href={LINKS.salesPage}>See the 30-day plan ({OFFER.price})</a>
+        </section>
+      )}
 
       <section className="section">
         <h3>What&apos;s actually true</h3>
@@ -589,16 +610,6 @@ function Results({
             <li key={i}><strong>{h.title}</strong>{h.text}</li>
           ))}
         </ul>
-      </section>
-
-      <section className="section why">
-        <h3>Why this matters to you</h3>
-        <p>{r.yourWhy}</p>
-      </section>
-
-      <section className="section">
-        <h3>The honest cost of waiting</h3>
-        <p className="quiet">{r.costOfWaiting}</p>
       </section>
 
       <section className="section">
@@ -614,7 +625,15 @@ function Results({
             </li>
           ))}
         </ol>
-        <p className="small muted">A step counts when you do it, not when it goes well.</p>
+        <p className="small muted">A step counts when you do it, not when it goes well. The 30-day plan gives you one of these every day, each a little bigger than the last.</p>
+      </section>
+
+      <section className="section why">
+        <h3>Why this matters</h3>
+        <ul className="bullets">
+          <li>{r.yourWhy}</li>
+          <li className="quiet">{r.costOfWaiting}</li>
+        </ul>
       </section>
 
       {r.beliefs.length > 0 && (
@@ -641,13 +660,19 @@ function Results({
       )}
 
       <section className="section">
-        <h3>What your first week could look like</h3>
-        {r.firstWeek && <p>{r.firstWeek}</p>}
-        {r.whyAPlan && <p>{r.whyAPlan}</p>}
+        <h3>Your first week in the plan</h3>
+        <ul className="bullets">
+          {r.firstWeek && <li>{r.firstWeek}</li>}
+          {r.whyAPlan && <li>{r.whyAPlan}</li>}
+        </ul>
         <div className="offer">
           <p className="price">{OFFER.name}</p>
-          <p><strong>{OFFER.price}, one payment.</strong> A 51-page workbook with one small rep a day for 30 days, plus a rep tracker, a rep card for each day, a pocket card for when your mind goes blank, and an AI Practice Partner to practice with first.</p>
-          <p className="small">90 days to decide. If it&apos;s not worth it, email the word &quot;refund&quot; to {LINKS.support} and get your money back.</p>
+          <ul>
+            <li>A 30-day workbook: one small rep a day, built for guys who&apos;ve never dated.</li>
+            <li>A rep tracker, a card for each day, and a pocket card for when your mind goes blank.</li>
+            <li>An AI Practice Partner to practice out loud first.</li>
+          </ul>
+          <p><strong>{OFFER.price}, one payment.</strong> 90 days to decide. If it&apos;s not worth it, email &quot;refund&quot; to {LINKS.support}.</p>
           <p className="small muted">No plan can honestly promise you a date or a girlfriend. This one gives you a clear step for every day.</p>
           <a className="btn gold" href={LINKS.salesPage}>See the 30-day plan ({OFFER.price})</a>
         </div>
