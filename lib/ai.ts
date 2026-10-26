@@ -11,7 +11,7 @@ export const FALLBACK_MODEL = "claude-haiku-5-5";
 // Time budget. The route has maxDuration = 60 (Vercel Hobby max). We must answer before that.
 // One full try gets up to 48s. A retry happens only if the first reply was bad AND at least 25s remain.
 export const AI_LIMITS = {
-  maxTokens: 3000, // about 1,500 needed for ~1,000 words + JSON; cap so a runaway reply can't blow the time limit
+  maxTokens: 6000, // about 1,500 needed for ~1,000 words + JSON; cap so a runaway reply can't blow the time limit
   deadlineMs: 54_000, // finish everything by 54s after the request started (6s margin for the rest of the route)
   firstTryMs: 48_000,
   retryMinMs: 25_000, // don't start a retry with less time than this left
@@ -111,7 +111,14 @@ export async function writeResults(
     }
     const parsed = validateAiResult(pickJson(msg));
     if (parsed) return parsed;
-    console.error(`quiz_ai_bad_json attempt=${attempt + 1} stop=${msg.stop_reason}`);
+    // Log only the shape (block types, token count), never the text.
+    const kinds = msg.content.map((b) => b.type).join(",");
+    console.error(`quiz_ai_bad_json attempt=${attempt + 1} model=${model} stop=${msg.stop_reason} blocks=${kinds} out_tokens=${msg.usage?.output_tokens ?? "?"}`);
+    // If the main model ran long or skipped the tool, try the faster fallback model on the retry.
+    if (!usedFallback && model !== FALLBACK_MODEL) {
+      model = FALLBACK_MODEL;
+      usedFallback = true;
+    }
   }
   throw new AiError("bad_json");
 }
