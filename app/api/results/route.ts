@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse, after } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { LIMITS, QUESTIONS, TAPS } from "@/lib/content";
 import { guard } from "@/lib/guard";
 import { crisisHit, under18Hit } from "@/lib/safety";
@@ -28,23 +28,27 @@ function ok(result: QuizResult) {
   return NextResponse.json({ result }, { headers: { "Cache-Control": "no-store" } });
 }
 
-// Save the email after the response is sent, so a slow Kajabi never delays his results.
-// Bounded so the whole request stays under maxDuration.
-function syncEmail(started: number, firstName: string, email: string, type: TypeId | null) {
-  after(async () => {
-    const budget = Math.min(10_000, 58_000 - (Date.now() - started));
-    if (budget < 2_000) {
-      console.error("quiz_subscribe code=no_time");
-      return;
-    }
+// Save the email to Kajabi BEFORE answering (bounded), so it always runs and always logs.
+// (It used to run after the response; on the live site it never logged, so leads were lost.)
+async function syncEmail(started: number, firstName: string, email: string, type: TypeId | null) {
+  const budget = Math.min(9_000, 58_000 - (Date.now() - started));
+  if (budget < 2_000) {
+    console.error("quiz_subscribe code=no_time");
+    return;
+  }
+  try {
     const out = await Promise.race([
       subscribe({ firstName, email, type }),
-      new Promise<{ mode: string; code: string; tagged: boolean }>((r) =>
-        setTimeout(() => r({ mode: process.env.KAJABI_MODE || "off", code: "timeout", tagged: false }), budget),
+      new Promise<{ ok: boolean; mode: string; code: string; tagged: boolean }>((r) =>
+        setTimeout(() => r({ ok: false, mode: process.env.KAJABI_MODE || "off", code: "timeout", tagged: false }), budget),
       ),
     ]);
-    console.log(`quiz_subscribe mode=${out.mode} code=${out.code} tagged=${out.tagged}`);
-  });
+    const line = `quiz_subscribe mode=${out.mode} code=${out.code} tagged=${out.tagged}`;
+    if (out.ok) console.log(line);
+    else console.error(line);
+  } catch (e) {
+    console.error(`quiz_subscribe code=exception ${e instanceof Error ? e.name : "unknown"}`);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -82,8 +86,8 @@ export async function POST(req: NextRequest) {
   if (!firstName || email.length > LIMITS.emailMax || !EMAIL_RE.test(email)) return fail(400, "bad_email");
   // The page sets this on a retake in the same visit, so he isn't signed up twice.
   const alreadySaved = b.alreadySaved === true;
-  const save = (r: QuizResult) => {
-    if (r.kind === "result" && !alreadySaved) syncEmail(started, firstName, email, r.fallback ? null : r.type);
+  const save = async (r: QuizResult) => {
+    if (r.kind === "result" && !alreadySaved) await syncEmail(started, firstName, email, r.fallback ? null : r.type);
     return ok(r);
   };
 
