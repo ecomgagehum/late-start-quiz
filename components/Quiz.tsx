@@ -632,7 +632,7 @@ function Results({
         <h3>Why this matters</h3>
         <ul className="bullets">
           <li>{r.yourWhy}</li>
-          <li className="quiet">{r.costOfWaiting}</li>
+          <li>{r.costOfWaiting}</li>
         </ul>
       </section>
 

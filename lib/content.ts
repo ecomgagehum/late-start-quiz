@@ -368,7 +368,7 @@ export const BELIEF_CLASHES: [BeliefId, BeliefId][] = [];
 
 export const BELIEF_SECTION = {
   title: "What you've been telling yourself vs. what the research says",
-  intro: "These facts are fixed. The AI didn't write them. Each one names the study it came from, with a link so you can check it yourself.",
+  intro: "Real research. Each one names the study it came from, with a link so you can check it yourself.",
   outro: "What you feel isn't always what's true. And confidence is something you can learn.",
 };
 

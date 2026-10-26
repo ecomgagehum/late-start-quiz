@@ -76,6 +76,8 @@ function str(v: unknown, max: number): string | null {
   // Plain text only: drop angle brackets and em/en dashes, collapse space, drop any stat we didn't approve.
   // Tester v2: drop tags whole (not just the brackets) and any link the model was talked into writing.
   let s = v
+    // A reply written as text JSON can leave escaped quotes (\\") behind. Show plain quotes.
+    .replace(/\\+"/g, '"')
     .replace(/<\/?[a-z][^>]*>/gi, "")
     .replace(/[<>]/g, "")
     .replace(/\bhttps?:\/\/\S+|\bwww\.\S+/gi, LINK)
