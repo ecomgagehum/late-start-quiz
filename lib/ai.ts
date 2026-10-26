@@ -5,6 +5,8 @@ import { AiResult, validateAiResult } from "./result";
 // Default: Claude Sonnet 5.5. The v2 result is longer and deeper (about 800 to 1,000 words), which needs a
 // stronger writer than Haiku. Change with QUIZ_MODEL (for example claude-haiku-5-5 to save cost).
 export const DEFAULT_MODEL = "claude-sonnet-5-5";
+// If the main model rejects the request (400/404), fall back to this one once so the guy still gets results.
+export const FALLBACK_MODEL = "claude-haiku-5-5";
 
 // Time budget. The route has maxDuration = 60 (Vercel Hobby max). We must answer before that.
 // One full try gets up to 48s. A retry happens only if the first reply was bad AND at least 25s remain.
@@ -49,7 +51,8 @@ export async function writeResults(
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new AiError("no_api_key");
   const client = new Anthropic({ apiKey, maxRetries: 0 });
-  const model = process.env.QUIZ_MODEL || DEFAULT_MODEL;
+  let model = process.env.QUIZ_MODEL || DEFAULT_MODEL;
+  let usedFallback = false;
   const userMessage = buildUserMessage(taps, answers);
   const deadline = startedAt + AI_LIMITS.deadlineMs;
 
@@ -90,7 +93,19 @@ export async function writeResults(
         throw new AiError("ai_timeout");
       }
       const status = e instanceof Anthropic.APIError ? e.status : undefined;
-      console.error(`quiz_ai_error status=${status ?? "none"}`);
+      // Anthropic's error text explains what was wrong with the request (never his answers). Keep it short.
+      let why = "";
+      if (e instanceof Anthropic.APIError) {
+        const body = e.error as { error?: { type?: string; message?: string } } | undefined;
+        why = `${body?.error?.type ?? ""} ${(body?.error?.message ?? "").slice(0, 160)}`.replace(/\s+/g, " ").trim();
+      }
+      console.error(`quiz_ai_error status=${status ?? "none"} model=${model} why=${why || "none"}`);
+      if ((status === 400 || status === 404) && !usedFallback && model !== FALLBACK_MODEL && deadline - Date.now() > AI_LIMITS.retryMinMs) {
+        model = FALLBACK_MODEL;
+        usedFallback = true;
+        attempt--; // the fallback try doesn't use up the bad-JSON retry
+        continue;
+      }
       throw new AiError(status === 429 || status === 529 ? "ai_busy" : "ai_failed");
     }
     const parsed = validateAiResult(pickJson(msg));
