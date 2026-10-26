@@ -139,7 +139,10 @@ async function apiToken(): Promise<string | null> {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({ grant_type: "client_credentials", client_id: id, client_secret: secret }).toString(),
   });
-  if (!res.ok) return null;
+  if (!res.ok) {
+    console.error(`quiz_subscribe api_token_status=${res.status}`);
+    return null;
+  }
   const j = (await res.json()) as { access_token?: string; expires_in?: number };
   if (!j.access_token) return null;
   tokenCache = { token: j.access_token, exp: Date.now() + (j.expires_in ?? 3600) * 1000 };
@@ -150,13 +153,18 @@ async function viaApi(input: SubscribeInput): Promise<SubscribeOutcome> {
   const token = await apiToken();
   if (!token) return { ok: false, mode: "api", code: "api_no_token", tagged: false };
   const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/vnd.api+json", Accept: "application/vnd.api+json" };
-  const formId = process.env.KAJABI_FORM_ID || DEFAULT_FORM_ID;
+  // Submit the per-type form when there is one (KAJABI_TYPE_FORM_IDS): its Kajabi automation adds the type tag,
+  // so no tag ids or tag scopes are needed. Otherwise the main quiz form.
+  const typeForms = parseJsonEnv<Partial<Record<TypeId, string>>>("KAJABI_TYPE_FORM_IDS");
+  const typeFormId = input.type && typeForms ? typeForms[input.type] : undefined;
+  const formId = typeFormId || process.env.KAJABI_FORM_ID || DEFAULT_FORM_ID;
   const sub = await fetchWithTimeout(`${API}/v1/forms/${formId}/submit`, {
     method: "POST",
     headers,
     body: JSON.stringify({ data: { type: "form_submissions", attributes: { name: input.firstName, email: input.email } } }),
   });
   if (!sub.ok) return { ok: false, mode: "api", code: `api_submit_${sub.status}`, tagged: false };
+  if (typeFormId) return { ok: true, mode: "api", code: "api_submitted_type_form", tagged: true };
 
   // Tag: needs tag ids (Kajabi tag ids, not names) in KAJABI_TAG_IDS, for example
   // {"freezer":"111","no_places":"222","burned_before":"333","never_started":"444"}
