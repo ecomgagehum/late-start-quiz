@@ -70,13 +70,14 @@ export async function writeResults(
           // The system prompt is the same for everyone, so it's cached (cheaper and a little faster).
           system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
           tools: [RESULT_TOOL as unknown as Anthropic.Tool],
-          tool_choice: { type: "tool", name: RESULT_TOOL.name },
+          // Sonnet 5.5 rejects a forced tool_choice ("tool"/"any"), so let the model choose and tell it to call the tool.
+          tool_choice: { type: "auto" },
           messages: [
             {
               role: "user",
               content:
                 attempt === 0
-                  ? userMessage
+                  ? userMessage + "\n\nAnswer only by calling give_results once, with every required field filled."
                   : userMessage + "\n\nYour last reply did not match the give_results format. Call give_results once, with every required field filled. Keep it a little shorter.",
             },
           ],
